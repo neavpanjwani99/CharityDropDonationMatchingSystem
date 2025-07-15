@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bootstrap Footer</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --main-bg: #faedcd;
+      --accent-bg: #2b2d42;
+      --highlight: #f4c430;
+      --light-text: #dad7cd;
+      --border-light: #ccd5ae;
+      --copyright-bg: #1f1f1f;
+      --send-bg: #f4c430;
+      --send-hover: #888;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .footer-section {
+      background: var(--accent-bg);
+      color: var(--light-text);
+    }
+
+    .footer-section h3,
+    .footer-section h4,
+    .footer-section span,
+    .footer-section p,
+    .footer-section a {
+      color: var(--light-text);
+    }
+
+    .footer-section a {
+      position: relative;
+      display: inline-block;
+      color: var(--light-text);
+      transition: all 0.4s;
+    }
+
+    .footer-section a:hover {
+      color: var(--highlight);
+    }
+
+    .footer-section a::before {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transform: rotateX(-90deg);
+      transform-origin: bottom;
+      transition: transform 0.4s;
+      color: var(--highlight);
+    }
+
+    .footer-section a:hover::before {
+      transform: rotateX(0deg);
+    }
+
+    .footer-section a span {
+      display: inline-block;
+      transition: transform 0.4s;
+      backface-visibility: hidden;
+    }
+
+    .footer-section a:hover span {
+      transform: rotateX(90deg);
+    }
+
+    .footer-section .cta-icon {
+      color: var(--highlight);
+      font-size: 30px;
+    }
+
+    .footer-section .footer-social-icon i {
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      border-radius: 50%;
+      text-align: center;
+      color: white;
+    }
+
+    .facebook-bg { background-color: #3B5998; }
+    .twitter-bg { background-color: #55ACEE; }
+    .google-bg { background-color: #DD4B39; }
+
+    .footer-widget-heading h3 {
+      font-size: 20px;
+      font-weight: 600;
+      position: relative;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+      color: var(--highlight);
+    }
+
+    .footer-widget-heading h3::after {
+      content: "";
+      position: absolute;
+      width: 50px;
+      height: 2px;
+      background: var(--highlight);
+      left: 0;
+      bottom: 0;
+    }
+
+    .subscribe-form input {
+      background: var(--main-bg);
+      border: 1px solid var(--border-light);
+      color: #000;
+    }
+
+    .subscribe-form button {
+      background: var(--send-bg);
+      border: none;
+      padding: 0 20px;
+      transition: background 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .subscribe-form button::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background-color: var(--send-hover);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.4s ease, height 0.4s ease;
+      z-index: 0;
+    }
+
+    .subscribe-form button:hover::before {
+      width: 300%;
+      height: 300%;
+    }
+
+    .subscribe-form button i {
+      position: relative;
+      z-index: 1;
+    }
+
+    .copyright-area {
+      background: var(--copyright-bg);
+      color: var(--highlight);
+    }
+
+    .footer-menu a {
+      color: var(--light-text);
+      margin-left: 15px;
+      font-size: 14px;
+    }
+
+    .footer-menu a:hover {
+      color: var(--highlight);
+    }
+  </style>
+</head>
+
+<body>
+ <footer class="footer-section pt-5">
+    <div class="container">
+      <!-- CTA -->
+      <div class="row border-bottom pb-4" style="border-color: var(--border-light)!important;">
+        <div class="col-md-4 mb-4">
+          <div class="d-flex">
+            <i class="fas fa-map-marker-alt cta-icon me-3"></i>
+            <div>
+              <h4>Find us</h4>
+              <span>1010 Avenue, sw 54321, Chandigarh</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="d-flex">
+            <i class="fas fa-phone cta-icon me-3"></i>
+            <div>
+              <h4>Call us</h4>
+              <span>9876543210</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="d-flex">
+            <i class="far fa-envelope-open cta-icon me-3"></i>
+            <div>
+              <h4>Mail us</h4>
+              <span>mail@info.com</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="row py-5">
+        <div class="col-lg-4 mb-4 text-center">
+          <img src="../../assets/logo.png" class="img-fluid mb-2" alt="Logo" style="max-width: 150px;">
+          <p class="fw-bold text-white mb-1" style="font-size: 20px;">Give<span class="text-warning">Sync</span></p>
+          <p style="font-size: 14px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <div class="footer-social-icon d-flex justify-content-center gap-2 mt-3">
+            <a href="#" class="facebook-bg"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="twitter-bg"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="google-bg"><i class="fab fa-google-plus-g"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-4 mb-4">
+          <div class="footer-widget-heading">
+            <h3>Useful Links</h3>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <ul class="list-unstyled">
+                <li><a href="#" data-text="Home"><span>Home</span></a></li>
+                <li><a href="#" data-text="About"><span>About</span></a></li>
+                <li><a href="#" data-text="Services"><span>Services</span></a></li>
+                <li><a href="#" data-text="Portfolio"><span>Portfolio</span></a></li>
+                <li><a href="#" data-text="Contact"><span>Contact</span></a></li>
+              </ul>
+            </div>
+            <div class="col-6">
+              <ul class="list-unstyled">
+                <li><a href="#" data-text="About Us"><span>About Us</span></a></li>
+                <li><a href="#" data-text="Our Services"><span>Our Services</span></a></li>
+                <li><a href="#" data-text="Expert Team"><span>Expert Team</span></a></li>
+                <li><a href="#" data-text="Contact Us"><span>Contact Us</span></a></li>
+                <li><a href="#" data-text="Latest News"><span>Latest News</span></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 mb-4">
+          <div class="footer-widget-heading">
+            <h3>Subscribe</h3>
+          </div>
+          <p>Don’t miss to subscribe to our new feeds, kindly fill the form below.</p>
+          <form class="subscribe-form d-flex mt-3">
+            <input type="email" class="form-control me-2" placeholder="Email Address" aria-label="Email Address">
+            <button class="btn" type="submit" aria-label="Subscribe">
+              <i class="fab fa-telegram-plane text-white"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="copyright-area py-3">
+      <div class="container text-center">
+        <p class="mb-0">&copy; 2018, All Right Reserved <a href="#" class="text-decoration-none" style="color: var(--highlight);">Neav</a></p>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>

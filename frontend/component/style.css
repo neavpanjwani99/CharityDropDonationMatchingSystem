@@ -1,0 +1,117 @@
+/* =========================================== */
+/* Footer css */
+/* =========================================== */
+
+
+
+/* ==================================== */
+/* NavBar */
+/* ==================================== */
+
+:root {
+    --main-bg: #faedcd;
+    --highlight: #fefae0;
+    --light-text: #dad7cd;
+    --border-light: #ccd5ae;
+    --donate-yellow: #f4c430;
+    --donate-hover: #1d3557;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar Styling */
+.navbar-custom {
+    background-color: transparent;
+    color: white;
+    border-bottom: 1px solid #ccc;
+    /* thin grey line */
+}
+
+.navbar-custom .nav-link {
+    color: white;
+    font-weight: 500;
+    position: relative;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.navbar-custom .nav-link:hover {
+    color: var(--donate-yellow);
+}
+
+.navbar-custom .nav-link::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    color: var(--donate-yellow);
+    transform: rotateX(-90deg);
+    transform-origin: bottom;
+    transition: transform 0.4s;
+}
+
+.navbar-custom .nav-link:hover::before {
+    transform: rotateX(0deg);
+}
+
+.navbar-custom .nav-link span {
+    display: inline-block;
+    transition: transform 0.4s;
+    backface-visibility: hidden;
+}
+
+.navbar-custom .nav-link:hover span {
+    transform: rotateX(90deg);
+}
+
+.navbar-custom .donate-btn {
+    background-color: var(--donate-yellow);
+    color: #000;
+    font-weight: 600;
+    border-radius: 30px;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.navbar-custom .donate-btn::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background-color: var(--donate-hover);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.4s ease, height 0.4s ease;
+    z-index: 0;
+}
+
+.navbar-custom .donate-btn:hover::before {
+    width: 300%;
+    height: 300%;
+}
+
+.navbar-custom .donate-btn:hover {
+    color: #fff;
+}
+
+.navbar-custom .donate-btn span {
+    position: relative;
+    z-index: 1;
+}
+
+@media (min-width: 992px) {
+    .navbar-nav.center-links {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
