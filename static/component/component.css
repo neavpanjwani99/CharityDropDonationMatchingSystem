@@ -1,0 +1,276 @@
+/* Shared Root Variables */
+:root {
+    --main-bg: #faedcd;
+    --accent-bg: #2b2d42;
+    --highlight: #f4c430;
+    --light-text: #dad7cd;
+    --border-light: #ccd5ae;
+    --copyright-bg: #1f1f1f;
+    --send-bg: #f4c430;
+    --send-hover: #888;
+    --donate-yellow: #f4c430;
+    --donate-hover: #1d3557;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* =========================================== */
+/* Footer Styles */
+/* =========================================== */
+
+.footer-section {
+    background: var(--accent-bg);
+    color: var(--light-text);
+}
+
+.footer-section h3,
+.footer-section h4,
+.footer-section span,
+.footer-section p,
+.footer-section a {
+    color: var(--light-text);
+}
+
+.footer-section a {
+    position: relative;
+    display: inline-block;
+    color: var(--light-text);
+    transition: all 0.4s;
+}
+
+.footer-section a:hover {
+    color: var(--highlight);
+}
+
+.footer-section a::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotateX(-90deg);
+    transform-origin: bottom;
+    transition: transform 0.4s;
+    color: var(--highlight);
+}
+
+.footer-section a:hover::before {
+    transform: rotateX(0deg);
+}
+
+.footer-section a span {
+    display: inline-block;
+    transition: transform 0.4s;
+    backface-visibility: hidden;
+}
+
+.footer-section a:hover span {
+    transform: rotateX(90deg);
+}
+
+.footer-section .cta-icon {
+    color: var(--highlight);
+    font-size: 30px;
+}
+
+.footer-section .footer-social-icon a {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 50%;
+    text-align: center;
+    color: white;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.footer-section .footer-social-icon a:hover {
+    transform: scale(1.2) rotate(10deg);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.facebook-bg {
+    background-color: #3B5998;
+}
+
+.twitter-bg {
+    background-color: #55ACEE;
+}
+
+.google-bg {
+    background-color: #DD4B39;
+}
+
+.footer-widget-heading h3 {
+    font-size: 20px;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    color: var(--highlight);
+}
+
+.footer-widget-heading h3::after {
+    content: "";
+    position: absolute;
+    width: 50px;
+    height: 2px;
+    background: var(--highlight);
+    left: 0;
+    bottom: 0;
+}
+
+.subscribe-form input {
+    background: var(--main-bg);
+    border: 1px solid var(--border-light);
+    color: #000;
+}
+
+.subscribe-form button {
+    background: var(--send-bg);
+    border: none;
+    padding: 0 20px;
+    transition: background 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.subscribe-form button::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background-color: var(--send-hover);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.4s ease, height 0.4s ease;
+    z-index: 0;
+}
+
+.subscribe-form button:hover::before {
+    width: 300%;
+    height: 300%;
+}
+
+.subscribe-form button i {
+    position: relative;
+    z-index: 1;
+}
+
+.copyright-area {
+    background: var(--copyright-bg);
+    color: var(--highlight);
+}
+
+.footer-menu a {
+    color: var(--light-text);
+    margin-left: 15px;
+    font-size: 14px;
+}
+
+.footer-menu a:hover {
+    color: var(--highlight);
+}
+
+/* =========================================== */
+/* Navbar Styles */
+/* =========================================== */
+
+.navbar-custom {
+    background-color: transparent;
+    color: white;
+    border-bottom: 1px solid #ccc;
+}
+
+.navbar-custom .nav-link {
+    color: white;
+    font-weight: 500;
+    position: relative;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.navbar-custom .nav-link:hover {
+    color: var(--donate-yellow);
+}
+
+.navbar-custom .nav-link::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    color: var(--donate-yellow);
+    transform: rotateX(-90deg);
+    transform-origin: bottom;
+    transition: transform 0.4s;
+}
+
+.navbar-custom .nav-link:hover::before {
+    transform: rotateX(0deg);
+}
+
+.navbar-custom .nav-link span {
+    display: inline-block;
+    transition: transform 0.4s;
+    backface-visibility: hidden;
+}
+
+.navbar-custom .nav-link:hover span {
+    transform: rotateX(90deg);
+}
+
+.navbar-custom .donate-btn {
+    background-color: var(--donate-yellow);
+    color: #000;
+    font-weight: 600;
+    border-radius: 30px;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.navbar-custom .donate-btn::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background-color: var(--donate-hover);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.4s ease, height 0.4s ease;
+    z-index: 0;
+}
+
+.navbar-custom .donate-btn:hover::before {
+    width: 300%;
+    height: 300%;
+}
+
+.navbar-custom .donate-btn:hover {
+    color: #fff;
+}
+
+.navbar-custom .donate-btn span {
+    position: relative;
+    z-index: 1;
+}
+
+@media (min-width: 992px) {
+    .navbar-nav.center-links {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}

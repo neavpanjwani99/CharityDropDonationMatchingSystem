@@ -1,0 +1,59 @@
+{% extends "starter_code.html" %}
+{% block title %}Donate Now | GiveSync{% endblock %}
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='component/component.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='component/donate.css') }}">
+
+<section class="donation-form-section py-5">
+    <div class="container">
+        <h2 class="section-heading">
+            <span class="highlighted-text">Make a Donation</span>
+        </h2>
+        <p class="section-subtext">Every contribution counts — support a cause that truly matters.</p>
+
+        <form action="{{ url_for('donate') }}" method="POST"
+  class="row g-3 glass-form shadow rounded p-4 animate-donation"
+  style="max-width: 700px; margin: auto;">
+  
+  <div class="col-md-6">
+    <label for="name" class="form-label">Full Name</label>
+    <input type="text" class="form-control" id="name" name="name" required placeholder="e.g., Aanya Sharma">
+  </div>
+
+  <div class="col-md-6">
+    <label for="email" class="form-label">Email Address</label>
+    <input type="email" class="form-control" id="email" name="email" required placeholder="you@example.com">
+  </div>
+
+  <div class="col-md-6">
+    <label for="amount" class="form-label">Amount (INR)</label>
+    <input type="number" class="form-control" id="amount" name="amount" required min="10" placeholder="e.g., 1000">
+  </div>
+
+  <div class="col-md-6">
+    <label for="cause" class="form-label">Select Cause</label>
+    <select class="form-select" id="cause" name="cause" required>
+      <option selected disabled value="">Choose a cause...</option>
+      <option value="Education">Education</option>
+      <option value="Healthcare">Healthcare</option>
+      <option value="Food & Shelter">Food & Shelter</option>
+      <option value="Women Empowerment">Women Empowerment</option>
+      <option value="Environment">Environment</option>
+    </select>
+  </div>
+
+  <div class="col-12">
+    <label for="message" class="form-label">Message (optional)</label>
+    <textarea class="form-control" id="message" name="message" rows="4" placeholder="Write a short note..."></textarea>
+  </div>
+
+  <div class="col-12 text-center">
+    <button type="submit" class="btn btn-animate">Donate Now</button>
+  </div>
+</form>
+
+    </div>
+</section>
+
+{% endblock %}

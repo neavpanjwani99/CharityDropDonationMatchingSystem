@@ -1,0 +1,260 @@
+{% extends "starter_code.html" %}
+{% block title %}GiveSync | Homepage{% endblock %}
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='component/component.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='component/Homepage.css') }}">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Slider Section -->
+<section id="slider" class="hero-section">
+  <input type="radio" name="slider" id="foto1" title="Slide 1">
+  <input type="radio" name="slider" id="foto2" title="Slide 2">
+  <input type="radio" name="slider" id="foto3" title="Slide 3" checked>
+  <input type="radio" name="slider" id="foto4" title="Slide 4">
+  <input type="radio" name="slider" id="foto5" title="Slide 5">
+
+  <label for="foto1" class="card" id="slide1">
+    <img src="https://i.ibb.co/xfzT7P5/hou-china-lang.jpg" alt="" draggable="false">
+  </label>
+  <label for="foto2" class="card" id="slide2">
+    <img src="https://i.ibb.co/GRRM1B8/hou-china-nv.jpg" alt="" draggable="false">
+  </label>
+  <label for="foto3" class="card" id="slide3">
+    <img src="https://i.ibb.co/W09NyLT/leonardo-sala-kj-sf-as1.jpg" alt="" draggable="false">
+  </label>
+  <label for="foto4" class="card" id="slide4">
+    <img src="https://i.ibb.co/NCqZvSN/hou-china-bing1.jpg" alt="" draggable="false">
+  </label>
+  <label for="foto5" class="card" id="slide5">
+    <img src="https://i.ibb.co/F5Gv2k8/hou-china-bing.jpg" alt="" draggable="false">
+  </label>
+</section>
+<div id="slider-caption" class="caption-box"></div>
+
+<!-- Donation Insight Section -->
+<section class="donation-wrapper position-relative">
+  <!-- Floating Image Outside -->
+  <div class="floating-image position-absolute"></div>
+
+  <div class="container-fluid donation-insight-section">
+    <div class="row align-items-center">
+      <div class="col-lg-6"></div> <!-- Placeholder column -->
+
+      <div class="col-lg-6 d-flex flex-column justify-content-center p-5">
+        <div class="mb-4">
+          <h5 class="text-warning fw-bold">01 <span class="text-white">Philosophical Foundation</span></h5>
+          <p>We embrace integrity, innovation, and dedication — ensuring every journey is built on trust and
+            forward-thinking solutions.</p>
+        </div>
+        <div class="mb-4">
+          <h5 class="text-warning fw-bold">02 <span class="text-white">Donor Transparency</span></h5>
+          <p>Every rupee is tracked — with real-time breakdowns of government, donor, and NGO support.</p>
+        </div>
+        <div class="mb-4">
+          <h5 class="text-warning fw-bold">03 <span class="text-white">Purpose-Driven Impact</span></h5>
+          <p>Your donation isn’t just money. It’s progress, nutrition, and education in motion.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Stats Section -->
+<section class="py-5 stats-strip" style="margin-top: -0.5%;">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-md-3 mb-4 mb-md-0">
+        <h2 class="counter" data-count="24">0</h2>
+        <p class="stats-label">Years of Experience</p>
+      </div>
+      <div class="col-md-3 mb-4 mb-md-0">
+        <h2 class="counter" data-count="189">0</h2>
+        <p class="stats-label">Society Registered</p>
+      </div>
+      <div class="col-md-3 mb-4 mb-md-0">
+        <h2 class="counter" data-count="520">0</h2>
+        <p class="stats-label">Square Feet Covered</p>
+      </div>
+      <!-- this will become 93% -->
+
+      <div class="col-md-3">
+        <h2 class="counter" data-count="93">0</h2>
+        <p class="stats-label">Positive Feedbacks</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- CTA Strip -->
+<section class="cta-strip text-center bg-dark-green py-5">
+  <div class="container d-flex flex-wrap align-items-center justify-content-between">
+
+    <!-- Left Pie Chart -->
+    <div class="col-md-6 d-flex justify-content-center mb-4 mb-md-0">
+      <canvas id="ctaPie" width="280" height="280"></canvas>
+    </div>
+
+    <!-- Right CTA Text + Custom Legend -->
+    <div class="col-md-6 text-md-start text-center">
+      <h3 class="text-white mb-3">Understand Our Fund Flow</h3>
+      <p class="text-light">Each donation is transparently distributed — know exactly where your contribution goes.</p>
+
+      <!-- Custom Legend -->
+      <div class="row mt-4 gx-3 gy-2">
+        <div class="col-12 col-sm-4">
+          <div class="legend-box d-flex align-items-center p-2 rounded shadow-sm" style="background-color: #F6C555;">
+            <div class="legend-color me-2 rounded-circle" style="width: 12px; height: 12px; background-color: #000;">
+            </div>
+            <small class="text-dark fw-bold">NGO Funds</small>
+          </div>
+        </div>
+        <div class="col-12 col-sm-4">
+          <div class="legend-box d-flex align-items-center p-2 rounded shadow-sm" style="background-color: #FF6384;">
+            <div class="legend-color me-2 rounded-circle" style="width: 12px; height: 12px; background-color: #fff;">
+            </div>
+            <small class="text-white fw-bold">Donor Contributions</small>
+          </div>
+        </div>
+        <div class="col-12 col-sm-4">
+          <div class="legend-box d-flex align-items-center p-2 rounded shadow-sm" style="background-color: #36A2EB;">
+            <div class="legend-color me-2 rounded-circle" style="width: 12px; height: 12px; background-color: #000;">
+            </div>
+            <small class="text-dark fw-bold">Govt Support</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA Button -->
+      <a href="#donate" class="btn btn-warning mt-4"><span>Support the Cause</span></a>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- NGO Partners Slider -->
+<section class="partner-logos-section py-5">
+  <div class="container">
+    <h2 class="partner-heading text-center mb-5">Our Partner NGOs</h2>
+    <div class="partner-slider d-flex flex-wrap justify-content-center gap-4">
+      <img src="../static/assets/ngo4-removebg-preview.png" alt="NGO 1" class="partner-logo">
+      <img src="../static/assets/1 (2).png" alt="NGO 2" class="partner-logo">
+      <img src="../static/assets/Ngo1-removebg-preview.png" alt="NGO 3" class="partner-logo">
+      <img src="../static/assets/ngo2.png" alt="NGO 4" class="partner-logo">
+      <img src="../static/assets/ngo3-removebg-preview.png" alt="NGO 5" class="partner-logo">
+      <img src="../static/assets/ngo5-removebg-preview.png" alt="NGO 5" class="partner-logo">
+    </div>
+  </div>
+</section>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const ctx = document.getElementById('ctaPie')?.getContext('2d');
+
+    if (ctx) {
+      let activeIndex = null;
+
+      const pieChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: ['NGO Funds', 'Donor Contributions', 'Govt Support'],
+          datasets: [{
+            data: [25, 55, 20],
+            backgroundColor: ['#F6C555', '#FF6384', '#36A2EB'],
+            borderWidth: 1,
+            offset: Array(3).fill(0) // no offset initially
+          }]
+        },
+        options: {
+          responsive: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: { enabled: true }
+          },
+          onClick: (e, elements) => {
+            const dataset = pieChart.data.datasets[0];
+            if (elements.length > 0) {
+              const index = elements[0].index;
+
+              // Reset all offsets
+              dataset.offset = dataset.offset.map(() => 0);
+
+              // Toggle offset for clicked index
+              dataset.offset[index] = activeIndex === index ? 0 : 20;
+              activeIndex = activeIndex === index ? null : index;
+
+              pieChart.update();
+            }
+          }
+        }
+      });
+    }
+  });
+</script>
+
+<script>
+  const radios = document.querySelectorAll('input[name="slider"]');
+  const captions = [
+    "Guardians of the Flame ",
+    "Market Streets - Nightfall",
+    "Artistic Ambience - Indoors",
+    "Warm Lights of Bing City",
+    "Sunset Souls - Bing Region"
+  ];
+
+  const captionBox = document.getElementById("slider-caption");
+  let index = 2; // Starts with foto3
+
+  // Show initial caption
+  captionBox.textContent = captions[index];
+  captionBox.classList.add("show");
+
+  setInterval(() => {
+    index = (index + 1) % radios.length;
+    radios[index].checked = true;
+
+    captionBox.classList.remove("show");
+
+    setTimeout(() => {
+      captionBox.textContent = captions[index];
+      captionBox.classList.add("show");
+    }, 100);
+  }, 3000);
+</script>
+
+<script>
+  const counters = document.querySelectorAll('.counter');
+
+  counters.forEach(counter => {
+    const target = parseInt(counter.getAttribute('data-count')); // Pure number
+    let suffix = ""; // Default no suffix
+
+    // Add suffix if needed
+    if (counter.dataset.count === "520") suffix = "+";
+    if (counter.dataset.count === "93") suffix = "%";
+
+    const updateCount = () => {
+      let current = parseInt(counter.innerText.replace(/[^\d]/g, '')) || 0;
+      const increment = Math.ceil(target / 50);
+
+      if (current < target) {
+        counter.innerText = current + increment + suffix;
+        setTimeout(updateCount, 30);
+      } else {
+        counter.innerText = target + suffix;
+      }
+    };
+
+    updateCount();
+  });
+</script>
+
+
+{% endblock %}

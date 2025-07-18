@@ -1,0 +1,390 @@
+ * {
+      margin: 0;
+      padding: 0;
+  }
+
+  body {
+      background-color: #22223b;
+      padding: 20px;
+      user-select: none;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+  }
+
+  body::-webkit-scrollbar {
+      display: none;
+  }
+
+  [type=radio] {
+      display: none;
+  }
+
+  #slider {
+      margin-top: 30px;
+      height: 400px;
+      position: relative;
+      perspective: 500px;
+      transform-style: preserve-3d;
+      transform-origin: 0% 50%;
+  }
+
+  label img {
+      width: 350px;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 15px;
+  }
+
+  #slider label {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      margin: auto;
+      width: 350px;
+      height: 400px;
+      border-radius: 10px;
+      position: absolute;
+      left: 0;
+      right: 0;
+      cursor: pointer;
+      transition: transform 0.1s ease;
+      overflow: hidden;
+      background-color: #22223b;
+  }
+
+  #foto1:checked~#slide4,
+  #foto2:checked~#slide5,
+  #foto3:checked~#slide1,
+  #foto4:checked~#slide2,
+  #foto5:checked~#slide3 {
+      box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .37);
+      transform: translate3d(-30%, 0, -200px);
+      opacity: 0.6;
+      z-index: -2;
+      position: absolute;
+      top: 0;
+      left: -60%;
+  }
+
+  #foto1:checked~#slide5,
+  #foto2:checked~#slide1,
+  #foto3:checked~#slide2,
+  #foto4:checked~#slide3,
+  #foto5:checked~#slide4 {
+      box-shadow: 0 6px 10px 0 rgba(0, 0, 0, .3);
+      transform: translate3d(-15%, 0, -100px);
+      opacity: 0.8;
+      z-index: -1;
+      position: absolute;
+      top: 0;
+      left: -30%;
+  }
+
+  #foto1:checked~#slide1,
+  #foto2:checked~#slide2,
+  #foto3:checked~#slide3,
+  #foto4:checked~#slide4,
+  #foto5:checked~#slide5 {
+      box-shadow: 0 13px 25px 0 rgba(0, 0, 0, .3);
+      transform: translate3d(0, 0, 0);
+  }
+
+  #foto1:checked~#slide2,
+  #foto2:checked~#slide3,
+  #foto3:checked~#slide4,
+  #foto4:checked~#slide5,
+  #foto5:checked~#slide1 {
+      box-shadow: 0 6px 10px 0 rgba(0, 0, 0, .3);
+      transform: translate3d(15%, 0, -100px);
+      opacity: 0.8;
+      z-index: -2;
+      position: absolute;
+      top: 0;
+      left: 30%;
+  }
+
+  #foto1:checked~#slide3,
+  #foto2:checked~#slide4,
+  #foto3:checked~#slide5,
+  #foto4:checked~#slide1,
+  #foto5:checked~#slide2 {
+      box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .3);
+      transform: translate3d(30%, 0, -200px);
+      opacity: 0.6;
+      z-index: -2;
+      position: absolute;
+      top: 0;
+      left: 60%;
+  }
+
+  .caption-box {
+      text-align: center;
+      margin-top: 12px;
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: 500;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.4s ease;
+      min-height: 24px;
+  }
+
+  .caption-box.show {
+      opacity: 1;
+      transform: translateY(0);
+  }
+
+  /* ============= Pie chart  ============= */
+
+  .legend-box {
+      transition: transform 0.3s ease;
+  }
+
+  .legend-box:hover {
+      transform: scale(1.05);
+  }
+
+  #ctaPie {
+      max-width: 100%;
+      height: auto;
+  }
+
+  .cta-donation-strip canvas {
+      background-color: transparent;
+  }
+
+  @media (max-width: 767px) {
+      .cta-donation-strip {
+          text-align: center;
+      }
+  }
+
+  
+/* =============donation wraping==================== */
+  .donation-wrapper {
+      position: relative;
+      padding: 120px 0;
+      /* 👈 Reduced height */
+      background-color: #22223b;
+  }
+
+
+  .donation-insight-section {
+      background: linear-gradient(135deg, #0D1B2A, #1F2A44);
+      border-radius: 10px;
+      padding: 100px 0;
+      position: relative;
+      z-index: 2;
+  }
+
+  .floating-image {
+      width: 550px;
+      height: 700px;
+      background-image: url('https://i.ibb.co/xfzT7P5/hou-china-lang.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      position: absolute;
+      top: 50%;
+      left: 60px;
+      transform: translateY(-50%);
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+      z-index: 3;
+  }
+
+  .donation-insight-section {
+      background-color: #101c16;
+      padding: 80px 0;
+      font-family: 'Inter', sans-serif;
+  }
+
+  .donation-insight-section .mb-4 {
+      border-left: 3px solid #F6C555;
+      padding-left: 20px;
+      margin-bottom: 40px;
+      transition: all 0.4s ease-in-out;
+  }
+
+  .donation-insight-section .mb-4:hover {
+      transform: translateX(10px);
+      border-color: #ffdf6c;
+  }
+
+  .donation-insight-section h5 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #f6c555;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+      position: relative;
+  }
+
+  .donation-insight-section h5 span {
+      color: #ffffff;
+      font-weight: 500;
+  }
+
+  .donation-insight-section p {
+      font-size: 1.05rem;
+      color: #ccc;
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 0;
+      transition: color 0.3s ease;
+  }
+
+  .donation-insight-section .mb-4:hover p {
+      color: #f0f0f0;
+  }
+
+  @media (max-width: 768px) {
+      .donation-insight-section .p-5 {
+          padding: 2rem 1rem !important;
+      }
+
+      .donation-insight-section h5 {
+          font-size: 1.2rem;
+      }
+
+      .donation-insight-section p {
+          font-size: 1rem;
+      }
+  }
+
+
+  /* ====================== */
+  /* data counter  */
+  /* ======================= */
+  .stats-strip {
+      background: linear-gradient(135deg, #0D1B2A, #1F2A44);
+      padding-top: 80px;
+      padding-bottom: 60px;
+  }
+
+  .counter {
+      font-size: 3rem;
+      font-weight: bold;
+      font-family: 'Inter', sans-serif;
+      color: #F6C555;
+  }
+
+  .stats-label {
+      font-size: 1rem;
+      color: #ccc;
+      margin-top: 12px;
+      font-family: 'Inter', sans-serif;
+  }
+
+  /* ======================button effect ======================= */
+
+  .btn.btn-warning {
+  padding: 12px 30px;
+  font-weight: 600;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  box-shadow: none;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.btn.btn-warning::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 300%;
+  height: 300%;
+  background-color: #fff6da;
+  transition: all 0.4s ease;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  z-index: 0;
+}
+
+.btn.btn-warning:hover::before {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 0.1;
+}
+
+.btn.btn-warning:hover {
+  transform: scale(1.03);
+  box-shadow: 0 10px 25px rgba(246, 197, 85, 0.3);
+  color: black;
+}
+
+
+/*================== NGO Partner Logos =================*/
+
+.partner-logos-section {
+  padding: 60px 0;
+}
+
+.partner-heading {
+  font-family: 'Inter', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #f6c555;
+  text-align: center;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.partner-heading::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 4px;
+  background-color: #f6c555;
+  margin: 15px auto 0;
+  border-radius: 2px;
+}
+
+.partner-slider {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  gap: 40px;
+  padding: 10px 20px;
+  justify-content: start;
+}
+
+.partner-slider::-webkit-scrollbar {
+  display: none;
+}
+
+.partner-logo {
+  flex: 0 0 auto;
+  width: 180px;
+  height: 130px;
+  object-fit: contain;
+  scroll-snap-align: start;
+  filter: grayscale(100%);
+  opacity: 0.7;
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.partner-logo:hover {
+  filter: grayscale(0%);
+  opacity: 1;
+  transform: scale(1.05);
+  /* background: #ffffff22; */
+}
+
+@media (max-width: 576px) {
+  .partner-logo {
+    width: 120px;
+    height: 70px;
+    padding: 8px;
+  }
+
+  .partner-heading {
+    font-size: 2rem;
+  }
+}
