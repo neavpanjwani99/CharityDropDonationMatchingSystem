@@ -1,0 +1,142 @@
+{% extends "component/footer.html" %}
+
+{% block title %}Login | GiveSync{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='component/login.css') }}" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5" style="min-height: 80vh;">
+  <div class="row g-4 justify-content-center align-items-center">
+
+    <!-- Left Animation + Quote -->
+    <div class="col-md-5 d-none d-md-block">
+      <div class="lottie-card">
+        <lottie-player
+          src="https://lottie.host/3f7ff5e4-c47c-4c8c-95b7-59e4720e989a/V19BYc1nU6.json"
+          background="transparent"
+          speed="1"
+          style="width: 100%; max-width: 280px; margin: 0 auto"
+          loop
+          autoplay
+        ></lottie-player>
+        <div id="quoteBox" class="mt-3"></div>
+        <small>GiveSync cares ❤️</small>
+      </div>
+    </div>
+
+    <!--  Right Login Form -->
+    <div class="col-md-6">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      <div class="card shadow-sm p-4 rounded-4">
+        <h2 class="text-center mb-4">Login to GiveSync</h2>
+        <form id="loginForm" method="POST" action="/login">
+          <div class="mb-3">
+            <label for="role" class="form-label">Login as</label>
+            <select class="form-select" id="role" name="role" required>
+              <option value="" disabled selected>Select your role</option>
+              <option value="donor">Donor</option>
+              <option value="admin">Admin</option>
+            </select>
+            <div class="invalid-feedback">Please select a role.</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required />
+            <div class="invalid-feedback">Please enter a valid email.</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required />
+            <div class="invalid-feedback">Password is required.</div>
+          </div>
+
+          <div class="mb-3 text-center">
+            <small>Don't have an account? <a href="/signup">Sign up here</a></small>
+          </div>
+
+          <div class="d-grid">
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-sign-in-alt me-2"></i>Login
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  document.getElementById("loginForm").addEventListener("submit", function (e) {
+    const form = e.target;
+    const role = form.role;
+    const email = form.email;
+    const password = form.password;
+    let valid = true;
+
+    if (!role.value) {
+      role.classList.add("is-invalid");
+      valid = false;
+    } else {
+      role.classList.remove("is-invalid");
+    }
+
+    if (!email.value || !email.checkValidity()) {
+      email.classList.add("is-invalid");
+      valid = false;
+    } else {
+      email.classList.remove("is-invalid");
+    }
+
+    if (!password.value) {
+      password.classList.add("is-invalid");
+      valid = false;
+    } else {
+      password.classList.remove("is-invalid");
+    }
+
+    if (!valid) e.preventDefault();
+  });
+
+  // Cleaned Quote Rotator (without emojis)
+  const quotes = [
+    "Your small act of kindness can save a life.",
+    "Giving is not just about making a donation. It's about making a difference.",
+    "When you support, someone survives.",
+    "Be the reason someone smiles today.",
+    "Every box you send delivers hope."
+  ];
+
+  let quoteIndex = 0;
+  const quoteBox = document.getElementById("quoteBox");
+
+  function rotateQuotes() {
+    if (quoteBox && quotes[quoteIndex]) {
+      quoteBox.textContent = quotes[quoteIndex];
+      quoteIndex = (quoteIndex + 1) % quotes.length;
+    }
+  }
+
+  if (quoteBox) {
+    rotateQuotes();
+    setInterval(rotateQuotes, 4000);
+  }
+</script>
+
+{% endblock %}
