@@ -1,0 +1,113 @@
+/* ✅ Make slider responsive */
+@media (max-width: 768px) {
+  #slider {
+    height: auto;
+    perspective: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  #slider label {
+    position: static !important;
+    transform: none !important;
+    width: 90vw;
+    height: auto;
+    margin: 10px 0;
+  }
+
+  label img {
+    width: 100% !important;
+    height: auto !important;
+    border-radius: 12px;
+  }
+
+  .caption-box {
+    font-size: 16px;
+    margin-top: 10px;
+  }
+}
+
+/* ✅ Floating image reposition */
+@media (max-width: 992px) {
+  .floating-image {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 90%;
+    height: 300px;
+    margin: 0 auto 20px auto;
+  }
+
+  .donation-wrapper {
+    padding: 40px 0;
+  }
+}
+
+/* ✅ Donation section stack */
+@media (max-width: 992px) {
+  .donation-insight-section .row {
+    flex-direction: column-reverse;
+  }
+
+  .donation-insight-section .col-lg-6 {
+    width: 100%;
+  }
+
+  .donation-insight-section .p-5 {
+    padding: 1rem !important;
+  }
+}
+
+/* ✅ Stats responsive */
+@media (max-width: 768px) {
+  .stats-strip .row > div {
+    margin-bottom: 30px;
+  }
+
+  .counter {
+    font-size: 2rem;
+  }
+
+  .stats-label {
+    font-size: 0.9rem;
+  }
+}
+
+/* ✅ CTA chart area stack */
+@media (max-width: 768px) {
+  .cta-strip .container {
+    flex-direction: column;
+  }
+
+  .cta-strip .col-md-6 {
+    width: 100%;
+    text-align: center !important;
+  }
+}
+
+@media (max-width: 992px) {
+  .floating-image {
+    position: relative !important;
+    width: 90% !important;
+    height: 300px !important;
+    top: auto !important;
+    left: auto !important;
+    margin: 0 auto 30px auto !important;
+    transform: none !important;
+    z-index: 1;
+  }
+
+  .donation-wrapper {
+    padding: 40px 0 !important;
+  }
+
+  .donation-insight-section .row {
+    flex-direction: column-reverse !important;
+  }
+
+  .donation-insight-section .col-lg-6 {
+    width: 100% !important;
+  }
+}

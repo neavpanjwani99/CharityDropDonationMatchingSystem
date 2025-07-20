@@ -1,54 +1,308 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-  background-color: #22223b;
+  background-color: #FFF8F0;
+  padding: 20px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow-x: hidden;
+  width: 100%;
   font-family: 'Inter', sans-serif;
-  color: #f6f7fb;
 }
 
-/* Section Heading Style */
-.section-heading {
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.donation-page {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding: 60px 20px;
+  background-color: #FFF8F0;
+  min-height: 100vh;
+  position: relative;
+  z-index: 2;
+}
+
+.donation-form-container {
+  width: 100%;
+  max-width: 720px;
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 2rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  margin-top: -2rem;
+  transition: all 0.3s ease;
+}
+
+.donation-heading {
+  font-size: 2rem;
   font-weight: 700;
-  font-size: 2.5rem;
+  color: #ED6A5A;
+  margin-bottom: 10px;
   text-align: center;
-  position: relative;
-  margin-bottom: 1rem;
-  color: #f6f7fb;
+  letter-spacing: 0.5px;
 }
 
-/* Highlighted Underline Effect */
-.section-heading .highlighted-text {
-  display: inline-block;
-  position: relative;
-  padding-bottom: 10px;
-  color: #f6f7fb;
+.donation-subtitle {
+  font-size: 1rem;
+  color: #666;
+  text-align: center;
+  margin-top: -5px;
+  margin-bottom: 30px;
 }
 
-.section-heading .highlighted-text::after {
-  content: "";
+form input,
+form select,
+form textarea {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  background-color: #fff8f0;
+}
+
+.section-label {
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #444;
+}
+
+.checkbox-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+#foodOptions label,
+.checkbox-group label {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 15px;
+  color: #333;
+}
+
+.qr-code {
+  width: 100%;
+  max-width: 200px;
+  margin: 10px auto;
+  border-radius: 12px;
+  box-shadow: 0 0 10px #00000020;
+  display: block;
+}
+
+button[type="submit"] {
   width: 60px;
-  height: 4px;
-  background-color: #F6C555; /* Golden Yellow */
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  transform: translateX(-50%);
-  border-radius: 2px;
+  height: 45px;
+  padding: 0;
+  border-radius: 8px;
+  background-color: #F6C555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+  border: none;
 }
 
-/* Subtext below heading */
-.section-subtext {
-  font-size: 1.1rem;
-  color: #cfd4e0;
-  max-width: 600px;
-  margin: 0 auto 2rem;
-  text-align: center;
-  line-height: 1.6;
-  opacity: 0.9;
-  letter-spacing: 0.3px;
+button[type="submit"]:hover {
+  background-color: #ffe177;
+  cursor: pointer;
 }
 
+.donate-btn {
+  background-color: #F6C555;
+  color: #000;
+  padding: 14px;
+  border: none;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
 
-/* Form Animation */
-@keyframes fadeSlideUp {
+.donate-btn:hover {
+  background-color: #ffe177;
+  transform: scale(1.02);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.conditional.hidden {
+  display: none;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .donation-form-container {
+    padding: 30px;
+    margin-top: 0;
+  }
+
+  .donation-heading {
+    font-size: 1.75rem;
+  }
+
+  .donation-subtitle {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .donation-page {
+    padding: 40px 15px;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+
+  .donation-form-container {
+    padding: 25px;
+  }
+
+  .donation-heading {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .donation-form-container {
+    padding: 20px;
+    border-radius: 1.5rem;
+  }
+
+  .donation-heading {
+    font-size: 1.3rem;
+  }
+
+  .donation-subtitle {
+    font-size: 0.9rem;
+  }
+
+  form input,
+  form select,
+  form textarea {
+    font-size: 15px;
+  }
+
+  .donate-btn {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  button[type="submit"] {
+    width: 50px;
+    height: 40px;
+  }
+}
+
+/* === Comment/Testimonial Bubbles === */
+.testimonial {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 280px;
+  margin: 30px auto;
+  animation: fadeInUp 0.6s ease-in-out both;
+}
+
+.comment-bubble {
+  display: flex;
+  align-items: flex-start;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 15px 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  gap: 15px;
+  transition: all 0.3s ease;
+  opacity: 0;
+  animation: fadeInUp 0.6s ease-in-out forwards;
+  border-left: 5px solid transparent;
+}
+
+/* ✅ Classy Hover Animation */
+.comment-bubble:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12), 0 0 10px rgba(0, 123, 255, 0.08);
+  border-left: 5px solid #ED6A5A;
+}
+
+/* Avatar rotate on hover */
+.comment-bubble img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  margin-top: 5px;
+  transition: transform 0.3s ease;
+}
+
+.comment-bubble:hover img {
+  transform: rotate(-4deg);
+}
+
+/* Text slide */
+.comment-bubble .text {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.4;
+  margin-top: 2px;
+  transition: transform 0.3s ease;
+}
+
+.comment-bubble:hover .text {
+  transform: translateX(4px);
+}
+
+.comment-bubble h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.comment-bubble .stars {
+  color: #f6c555;
+  font-size: 14px;
+  margin: 2px 0;
+}
+
+@media (max-width: 768px) {
+  .donation-page {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .testimonial {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 100%;
+  }
+
+  .comment-bubble {
+    width: 100%;
+    max-width: 320px;
+  }
+}
+
+/* ✅ Entry Animation Keyframes */
+@keyframes fadeInUp {
   from {
     opacity: 0;
     transform: translateY(20px);
@@ -59,101 +313,31 @@ body {
   }
 }
 
-form.animate-donation {
-  animation: fadeSlideUp 0.6s ease-in-out;
-  transition: all 0.3s ease;
+.hidden {
+  display: none;
+}
+.qr-code {
+  max-width: 150px;
+  margin: 10px 0;
+}
+.countdown-timer {
+  font-weight: bold;
+  color: red;
+}
+.section-label {
+  font-weight: bold;
+  margin-top: 10px;
+}
+.checkbox-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 8px;
+}
+.location-link {
+  color: #0066cc;
+  text-decoration: underline;
+}
+.location-link:hover {
+  text-decoration: none;
 }
 
-/* Label Styling */
-.form-label {
-  font-weight: 600;
-  color: #183125;
-  margin-bottom: 5px;
-  font-size: 0.95rem;
-}
-
-/* Inputs and Textarea */
-.form-control,
-.form-select {
-  border-radius: 8px;
-  transition: all 0.3s ease;
-  box-shadow: none;
-}
-
-.form-control:focus,
-.form-select:focus {
-  border-color: #F6C555;
-  box-shadow: 0 0 0 0.15rem rgba(246, 197, 85, 0.4);
-}
-
-/* Submit Button */
-.btn-success {
-  background-color: #183125;
-  border-color: #183125;
-  transition: all 0.3s ease;
-}
-
-.btn-success:hover {
-  background-color: #2b4b3a;
-  border-color: #2b4b3a;
-  transform: scale(1.03);
-}
-
-/* Animated Button Style */
-.btn-animate {
-  background-color: #183125;
-  border: none;
-  color: #fff;
-  font-weight: 600;
-  padding: 12px 28px;
-  border-radius: 50px;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  z-index: 1;
-}
-
-.btn-animate::before {
-  content: "";
-  position: absolute;
-  background: #f6c555;
-  height: 100%;
-  width: 0%;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  transition: 0.4s ease;
-  border-radius: 50px;
-}
-
-.btn-animate:hover::before {
-  width: 100%;
-}
-
-.btn-animate:hover {
-  color: #183125;
-  transform: scale(1.05);
-}
-
-/* 🔹 Semi-transparent glass effect */
-.glass-form {
-  background: rgba(255, 255, 255, 0.311);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgb(0, 0, 0);
-}
-
-/* 🔹 Placeholder Style */
-.glass-form input::placeholder,
-.glass-form textarea::placeholder {
-  color: #bbb;
-  font-style: italic;
-}
-
-/* 🔹 Input focus glow */
-.glass-form input:focus,
-.glass-form textarea:focus,
-.glass-form select:focus {
-  border-color: #f6c555;
-  box-shadow: 0 0 0 0.2rem rgba(246, 197, 85, 0.25);
-}

@@ -1,11 +1,14 @@
 /* Shared Root Variables */
 :root {
-    --main-bg: #faedcd;
-    --accent-bg: #2b2d42;
-    --highlight: #f4c430;
-    --light-text: #dad7cd;
+    --main-bg: #FFF8F0;
+    /* Soft Cream */
+    --accent-bg: #ED6A5A;
+    /* Coral Red */
+    --highlight: #FFD166;
+    /* Warm Yellow */
+    --light-text: #FAFAFA;
     --border-light: #ccd5ae;
-    --copyright-bg: #1f1f1f;
+    --copyright-bg: #393E46;
     --send-bg: #f4c430;
     --send-hover: #888;
     --donate-yellow: #f4c430;
@@ -13,8 +16,12 @@
 }
 
 body {
+    overflow-x: hidden;
+    width: 100%;
     margin: 0;
-    padding: 0;
+    padding-top: 80px;
+    background-color: var(--main-bg);
+    font-family: 'Inter', sans-serif;
 }
 
 /* =========================================== */
@@ -24,6 +31,9 @@ body {
 .footer-section {
     background: var(--accent-bg);
     color: var(--light-text);
+    /* border: #000; */
+    border-top-left-radius: 5rem;
+    border-top-right-radius: 5rem
 }
 
 .footer-section h3,
@@ -37,7 +47,7 @@ body {
 .footer-section a {
     position: relative;
     display: inline-block;
-    color: var(--light-text);
+    /* color: var(--light-text); */
     transition: all 0.4s;
 }
 
@@ -125,9 +135,16 @@ body {
 }
 
 .subscribe-form input {
-    background: var(--main-bg);
-    border: 1px solid var(--border-light);
+    background: var(--send-bg);
+    border: none;
+    padding: 10px 20px;
+    transition: background 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    border-radius: 8px;
     color: #000;
+    font-weight: bold;
 }
 
 .subscribe-form button {
@@ -182,15 +199,21 @@ body {
 /* =========================================== */
 /* Navbar Styles */
 /* =========================================== */
-
 .navbar-custom {
-    background-color: transparent;
-    color: white;
+    background-color: var(--accent-bg);
+    color: var(--light-text);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1050;
     border-bottom: 1px solid #ccc;
+    border-radius: 35px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
 }
 
 .navbar-custom .nav-link {
-    color: white;
+    color: var(--light-text);
     font-weight: 500;
     position: relative;
     display: inline-block;
@@ -273,4 +296,63 @@ body {
         left: 50%;
         transform: translateX(-50%);
     }
+}
+
+/* Custom Hamburger Icon for Mobile Navbar */
+.navbar-toggler {
+    border: none;
+    background: transparent;
+    outline: none;
+    box-shadow: none;
+    position: relative;
+    z-index: 9999;
+}
+
+/* Hamburger Icon Lines */
+.navbar-toggler .navbar-toggler-icon {
+    background-image: none;
+    width: 24px;
+    height: 2px;
+    background-color: var(--light-text);
+    display: block;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+}
+
+.navbar-toggler .navbar-toggler-icon::before,
+.navbar-toggler .navbar-toggler-icon::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--light-text);
+    transition: all 0.3s ease-in-out;
+}
+
+.navbar-toggler .navbar-toggler-icon::before {
+    top: -8px;
+}
+
+.navbar-toggler .navbar-toggler-icon::after {
+    top: 8px;
+}
+
+/* ✅ Animate on open */
+.navbar-toggler.collapsed .navbar-toggler-icon {
+    background-color: var(--light-text);
+}
+
+.navbar-toggler:not(.collapsed) .navbar-toggler-icon {
+    background-color: transparent;
+}
+
+.navbar-toggler:not(.collapsed) .navbar-toggler-icon::before {
+    transform: rotate(45deg);
+    top: 0;
+}
+
+.navbar-toggler:not(.collapsed) .navbar-toggler-icon::after {
+    transform: rotate(-45deg);
+    top: 0;
 }
