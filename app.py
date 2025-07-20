@@ -1,20 +1,16 @@
-from flask import Flask, render_template, request, redirect, flash, url_for
-<<<<<<< Updated upstream
-from datetime import datetime
-=======
+from flask import Flask, render_template, request, redirect, flash, url_for, session
 from flask_mysqldb import MySQL
-from werkzeug.security import generate_password_hash
-from flask import session
-from werkzeug.security import check_password_hash
->>>>>>> Stashed changes
+from werkzeug.security import generate_password_hash, check_password_hash
 import re
+from datetime import datetime
+
 
 app = Flask(__name__)
 app.secret_key = 'giveSyncSuperSecretKey'  # Required for flashing messages
 
-<<<<<<< Updated upstream
+
 # Home
-=======
+
 # MySQL Config
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
@@ -23,7 +19,7 @@ app.config['MYSQL_DB'] = 'charitydrop'
 
 mysql = MySQL(app)
 
->>>>>>> Stashed changes
+
 @app.route('/')
 def home():
     return render_template('home.html')
@@ -68,11 +64,8 @@ def login():
 
     return render_template('login.html')
 
-<<<<<<< Updated upstream
-# Register Page
-=======
 
->>>>>>> Stashed changes
+# Register Page
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -87,31 +80,30 @@ def register():
         phone = request.form.get('phone')
         address = request.form.get('address')
 
-<<<<<<< Updated upstream
+
         # Basic email format validation
-=======
         # Email validation
->>>>>>> Stashed changes
+ 
         if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
             flash(" Invalid email format.", "danger")
             return render_template("register.html")
 
-<<<<<<< Updated upstream
+
         # Check if passwords match
-=======
->>>>>>> Stashed changes
+
+
         if password != confirm:
             flash(" Passwords do not match.", "danger")
             return render_template("register.html")
 
-<<<<<<< Updated upstream
+
         # Future: Save to DB here
         # Example:
         # save_user_to_db(email=email, password=hash(password))
 
         flash("Registration successful!", "success")
         return redirect(url_for("login"))
-=======
+
         # Hash the password before storing
         hashed_password = generate_password_hash(password)
 
@@ -130,7 +122,7 @@ def register():
         except Exception as e:
             flash(f"❌ Error: {str(e)}", "danger")
             return render_template("register.html")
->>>>>>> Stashed changes
+
 
     return render_template("register.html")
 
