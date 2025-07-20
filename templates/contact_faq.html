@@ -17,7 +17,33 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='component/component.css') }}"
     />
-    <style></style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='component/contact.css') }}">
+
+    <style>
+      .footer-section {
+        background: var(--accent-bg);
+        color: var(--light-text);
+        width: 95%;
+        margin: 0 auto; 
+        border-top-left-radius: 5rem;
+        border-top-right-radius: 5rem;
+      }
+
+      .navbar-custom {
+        background-color: var(--accent-bg);
+        color: var(--light-text);
+        position: fixed;
+        top: 0;
+        width: 95%;
+        margin: 0 auto; /* Center the navbar */
+        z-index: 1050;
+        border-bottom: 1px solid #ccc;
+        border-radius: 35px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+      
+
+    </style>
   </head>
 
   <body>
@@ -63,26 +89,6 @@
               >
             </li>
             <li class="nav-item mx-2">
-              <a class="nav-link" href="#" data-text="Causes"
-                ><span>Causes</span></a
-              >
-            </li>
-            <li class="nav-item mx-2">
-              <a class="nav-link" href="#" data-text="Blog"
-                ><span>Blog</span></a
-              >
-            </li>
-            <li class="nav-item mx-2">
-              <a class="nav-link" href="#" data-text="Team"
-                ><span>Team</span></a
-              >
-            </li>
-            <li class="nav-item mx-2">
-              <a class="nav-link" href="#" data-text="Donate"
-                ><span>Donate</span></a
-              >
-            </li>
-            <li class="nav-item mx-2">
               <a class="nav-link" href="/contact" data-text="Contact"
                 ><span>Contact</span></a
               >
@@ -104,10 +110,148 @@
 
     <br /><br />
 
-    {% block content %} {% endblock %}
+    <div class="container px-3 px-md-4">
+      <div class="row py-5">
+        <!-- 📬 Contact Form -->
+        <div class="col-lg-6 mb-4">
+          <h2 class="mb-4 gold-heading">Get in Touch</h2>
+          <form method="POST" action="{{ url_for('contact') }}">
+            <div class="mb-3">
+              <input
+                type="text"
+                name="name"
+                class="form-control"
+                placeholder="Your Name"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <input
+                type="email"
+                name="email"
+                class="form-control"
+                placeholder="Your Email"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <input
+                type="text"
+                name="subject"
+                class="form-control"
+                placeholder="Subject"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <textarea
+                name="message"
+                rows="5"
+                class="form-control"
+                placeholder="Your Message"
+                required
+              ></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">
+              Send Message
+            </button>
+          </form>
+        </div>
+
+        <!-- 🗺️ Google Map -->
+        <div class="col-lg-6">
+          <h2 class="mb-4 gold-heading">Our Location</h2>
+          <div class="ratio ratio-16x9">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d57300.17673680319!2d73.0804216861725!3d19.209049575085526!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be795a8452a5c3d%3A0x33c2d1ba14cbe2b8!2sManavata%20social%20service!5e1!3m2!1sen!2sin!4v1753016858231!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+              width="600"
+              height="450"
+              style="border: 0"
+              allowfullscreen=""
+              loading="lazy"
+            >
+            </iframe>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ Section -->
+      <section class="pb-5">
+        <h2 class="text-center mb-4 gold-heading">Frequently Asked Questions</h2>
+        <div class="accordion" id="faqAccordion">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="faq1">
+              <button
+                class="accordion-button"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapse1"
+              >
+                How can I contact your team?
+              </button>
+            </h2>
+            <div
+              id="collapse1"
+              class="accordion-collapse collapse show"
+              data-bs-parent="#faqAccordion"
+            >
+              <div class="accordion-body">
+                You can reach us via the contact form above or directly at our
+                email: support@givesync.org
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="faq2">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapse2"
+              >
+                Where are you located?
+              </button>
+            </h2>
+            <div
+              id="collapse2"
+              class="accordion-collapse collapse"
+              data-bs-parent="#faqAccordion"
+            >
+              <div class="accordion-body">
+                We are based in Mumbai, Maharashtra — but we operate pan-India.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="faq3">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapse3"
+              >
+                Can I volunteer or donate physically?
+              </button>
+            </h2>
+            <div
+              id="collapse3"
+              class="accordion-collapse collapse"
+              data-bs-parent="#faqAccordion"
+            >
+              <div class="accordion-body">
+                Absolutely! Use the contact form or check our donation page for
+                more details.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
 
     <!-- ======================================= -->
-    <!-- Footer Section -->
+                <!-- Footer Section -->
     <!-- ======================================= -->
     <footer class="footer-section pt-5">
       <div class="container">
@@ -189,7 +333,7 @@
             </div>
           </div>
 
-          <div class="col-lg-4 mb-4 footer-quick-links">
+          <div class="col-lg-4 mb-4 ">
             <div class="footer-widget-heading">
               <h3>Quick Links</h3>
             </div>
@@ -205,10 +349,9 @@
                   <li>
                     <a href="/contact"><span>Contact</span></a>
                   </li>
-                  
+                 
                 </ul>
               </div>
-              
             </div>
           </div>
 

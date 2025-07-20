@@ -1,0 +1,141 @@
+ #invoice {
+     padding: 30px;
+ }
+
+ .invoice {
+     background: #fff;
+     padding: 15px;
+     min-height: 680px;
+ }
+
+ .invoice header {
+     border-bottom: 1px solid #3989c6;
+     padding: 10px 0;
+     margin-bottom: 20px;
+ }
+
+ .company-details {
+     text-align: right;
+ }
+
+ .invoice-to {
+     text-align: left;
+ }
+
+ .invoice-to .to {
+     font-weight: bold;
+ }
+
+ .invoice-details {
+     text-align: right;
+ }
+
+ .invoice main {
+     padding-bottom: 50px;
+ }
+
+ .invoice table {
+     width: 100%;
+     border-collapse: collapse;
+     margin-bottom: 20px;
+ }
+
+ .invoice table td,
+ .invoice table th {
+     padding: 15px;
+     background: #eee;
+     border-bottom: 1px solid #fff;
+ }
+
+ .invoice table th {
+     font-size: 16px;
+     font-weight: 500;
+ }
+
+ .invoice table td h3 {
+     margin: 0;
+     font-size: 1.2em;
+     color: #3989c6;
+ }
+
+ .invoice .no {
+     background: #3989c6;
+     color: white;
+     font-size: 1.5em;
+ }
+
+ .invoice .unit {
+     text-align: right;
+     background: #ddd;
+ }
+
+ .invoice .qty {
+     text-align: right;
+ }
+
+ .invoice .total {
+     background: #3989c6;
+     color: white;
+     text-align: right;
+ }
+
+ .invoice footer {
+     border-top: 1px solid #aaa;
+     text-align: center;
+     padding: 8px 0;
+     color: #777;
+ }
+
+ @media print {
+     .invoice {
+         font-size: 11px !important;
+         overflow: hidden !important;
+     }
+
+     .invoice footer {
+         position: absolute;
+         bottom: 10px;
+         page-break-after: always;
+     }
+
+     .invoice>div:last-child {
+         page-break-before: always;
+     }
+ }
+
+ .share-icons {
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 1000;
+}
+
+.share-icons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 50%;
+  text-decoration: none;
+  font-size: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.share-icons a:hover {
+  background-color: #0056b3;
+}
+
+@media(max-width: 768px) {
+  .share-icons {
+    flex-direction: row;
+    position: static;
+    justify-content: center;
+    margin-top: 10px;
+  }
+}

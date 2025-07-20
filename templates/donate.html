@@ -1,38 +1,61 @@
-{% extends "starter_code.html" %}
-{% block title %}Donate Now | GiveSync{% endblock %}
-{% block content %}
+{% extends "starter_code.html" %} {% block title %}Donate Now | GiveSync{%
+endblock %} {% block content %}
 
 <!-- Optimized Fonts & Styles -->
-<link rel="stylesheet" href="{{ url_for('static', filename='component/responsive.css') }}" />
-<link rel="stylesheet" href="{{ url_for('static', filename='component/donate.css') }}" />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='component/responsive.css') }}"
+/>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='component/donate.css') }}"
+/>
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+  rel="stylesheet"
+/>
 
 <div class="donation-page">
-
   <!-- Testimonials (Left) -->
   <div class="testimonial">
     <div class="comment-bubble">
-      <img src="{{ url_for('static', filename='assets/img (5).jpg') }}" alt="User 1" />
+      <img
+        src="{{ url_for('static', filename='assets/img (5).jpg') }}"
+        alt="User 1"
+      />
       <div>
         <h4>Ankit</h4>
         <div class="stars">★★★★★</div>
-        <div class="text">"Donating clothes gave me a sense of purpose. Glad to help!"</div>
+        <div class="text">
+          "Donating clothes gave me a sense of purpose. Glad to help!"
+        </div>
       </div>
     </div>
     <div class="comment-bubble">
-      <img src="{{ url_for('static', filename='assets/img (3).jpg') }}" alt="User 3" />
+      <img
+        src="{{ url_for('static', filename='assets/img (3).jpg') }}"
+        alt="User 3"
+      />
       <div>
         <h4>Megha</h4>
         <div class="stars">★★★★★</div>
-        <div class="text">"Contributing school supplies felt amazing. Every child deserves a chance."</div>
+        <div class="text">
+          "Contributing school supplies felt amazing. Every child deserves a
+          chance."
+        </div>
       </div>
     </div>
     <div class="comment-bubble">
-      <img src="{{ url_for('static', filename='assets/img (6).jpg') }}" alt="User 2" />
+      <img
+        src="{{ url_for('static', filename='assets/img (6).jpg') }}"
+        alt="User 2"
+      />
       <div>
         <h4>Rahul</h4>
         <div class="stars">★★★★☆</div>
-        <div class="text">"Seeing smiles after sharing food was priceless. I’ll do it again."</div>
+        <div class="text">
+          "Seeing smiles after sharing food was priceless. I’ll do it again."
+        </div>
       </div>
     </div>
   </div>
@@ -40,17 +63,40 @@
   <!-- Donation Form -->
   <div class="donation-form-container">
     <h2 class="donation-heading">Make a Donation</h2>
-    <p class="donation-subtitle">Choose how you'd like to contribute to a better tomorrow</p>
+    <p class="donation-subtitle">
+      Choose how you'd like to contribute to a better tomorrow
+    </p>
 
-    <form method="POST" action="/donate" id="donationForm">
+    <form method="POST" action="#" id="donationForm">
       <div class="row">
-        <div class="col"><input type="text" name="first_name" placeholder="First Name" required /></div>
-        <div class="col"><input type="text" name="last_name" placeholder="Last Name" required /></div>
+        <div class="col" >
+          <input
+            type="text"
+            name="first_name"
+            placeholder="First Name"
+             id="firstName"
+            required
+          />
+        </div>
+        <div class="col">
+          <input
+            type="text"
+            name="last_name"
+            id="lastName"
+            placeholder="Last Name"
+            required
+          />
+        </div>
       </div>
-      <input type="email" name="email" placeholder="Email Address" required />
-      <input type="tel" name="phone" placeholder="Phone Number" required />
+      <input type="email" name="email" placeholder="Email Address" id="email" required />
+      <input type="tel" name="phone" placeholder="Phone Number" id="phone" required />
 
-      <select name="donation_type" id="donationType" required onchange="handleDonationTypeChange()">
+      <select
+        name="donation_type"
+        id="donationType"
+        required
+        onchange="handleDonationTypeChange()"
+      >
         <option value="">What would you like to donate?</option>
         <option value="food">Food</option>
         <option value="cloth">Clothes</option>
@@ -61,24 +107,62 @@
       <!-- FOOD Section -->
       <div id="foodOptions" class="conditional hidden">
         <p class="section-label">Food Donation Options:</p>
-        <label><input type="radio" name="food_option" value="self" onclick="showFoodSelf()" /> I will donate food myself</label>
-        <label><input type="radio" name="food_option" value="cash" onclick="showFoodCash()" /> I want to donate money for food</label>
+        <label
+          ><input
+            type="radio"
+            name="food_option"
+            value="self"
+            id="foodbymyself"
+            onclick="showFoodSelf()"
+          />
+          I will donate food myself</label
+        >
+        <label
+          ><input
+            type="radio"
+            name="food_option"
+            value="cash"
+            id="foodcash"
+            onclick="showFoodCash()"
+          />
+          I want to donate money for food</label
+        >
 
         <div id="foodSelfInfo" class="sub-conditional hidden">
-          <p><strong>Drop Location:</strong> <a href="https://www.google.com/maps/place/Sector+17,+Vashi,+Navi+Mumbai,+Maharashtra+400703/" target="_blank" class="location-link">CharityDrop Foundation, Sector 17, Navi Mumbai</a></p>
+          <p>
+            <strong>Drop Location:</strong>
+            <a
+              href="https://www.google.com/maps/place/Sector+17,+Vashi,+Navi+Mumbai,+Maharashtra+400703/"
+              target="_blank"
+              class="location-link"
+              >CharityDrop Foundation, Sector 17, Navi Mumbai</a
+            >
+          </p>
           <p><strong>Timing:</strong> 10 AM – 2 PM</p>
         </div>
 
         <div id="foodCashQR" class="sub-conditional hidden">
           <p>Scan this QR to donate for food:</p>
-          <img src="{{ url_for('static', filename='img/qr-food.png') }}" class="qr-code" alt="Food QR" />
+          <img
+            src="{{ url_for('static', filename='img/qr-food.png') }}"
+            class="qr-code"
+            alt="Food QR"
+          />
           <p id="foodTimer" class="countdown-timer"></p>
         </div>
       </div>
 
       <!-- CLOTH Section -->
       <div id="clothInfo" class="conditional hidden">
-        <p><strong>Drop Location:</strong> <a href="https://www.google.com/maps/place/Sector+17,+Vashi,+Navi+Mumbai,+Maharashtra+400703/" target="_blank" class="location-link">CharityDrop Foundation</a></p>
+        <p>
+          <strong>Drop Location:</strong>
+          <a
+            href="https://www.google.com/maps/place/Sector+17,+Vashi,+Navi+Mumbai,+Maharashtra+400703/"
+            target="_blank"
+            class="location-link"
+            >CharityDrop Foundation</a
+          >
+        </p>
         <p><strong>Timing:</strong> 9 AM – 6 PM</p>
         <p id="clothTimer" class="countdown-timer"></p>
       </div>
@@ -94,7 +178,11 @@
           <option value="Other">Other</option>
         </select>
         <p>Scan to donate:</p>
-        <img src="{{ url_for('static', filename='assets/qr.jpg') }}" class="qr-code" alt="Cash QR" />
+        <img
+          src="{{ url_for('static', filename='assets/qr.jpg') }}"
+          class="qr-code"
+          alt="Cash QR"
+        />
         <p id="cashTimer" class="countdown-timer"></p>
       </div>
 
@@ -102,46 +190,79 @@
       <div id="studyOptions" class="conditional hidden">
         <p class="section-label">Select Study Items to Donate:</p>
         <div class="checkbox-group">
-          {% for item in ['Books', 'Pen', 'Pencil', 'Geometry box', 'School bag', 'Notebooks', 'Art materials', 'Calculator', 'Exam sheets', 'Stationery kit'] %}
-          <label><input type="checkbox" name="study_items" value="{{ item }}" /> {{ item }}</label>
+          {% for item in ['Books', 'Pen', 'Pencil', 'Geometry box', 'School
+          bag', 'Notebooks', 'Art materials', 'Calculator', 'Exam sheets',
+          'Stationery kit'] %}
+          <label
+            ><input type="checkbox" name="study_items" value="{{ item }}" /> {{
+            item }}</label
+          >
           {% endfor %}
         </div>
-        <p><strong>Drop Location:</strong> <a href="https://www.google.com/maps/place/Sector+17,+Vashi,+Navi+Mumbai,+Maharashtra+400703/" target="_blank" class="location-link">CharityDrop Foundation</a></p>
+        <p>
+          <strong>Drop Location:</strong>
+          <a
+            href="https://www.google.com/maps/place/Sector+17,+Vashi,+Navi+Mumbai,+Maharashtra+400703/"
+            target="_blank"
+            class="location-link"
+            >CharityDrop Foundation</a
+          >
+        </p>
         <p><strong>Timing:</strong> 11 AM – 4 PM</p>
         <p id="studyTimer" class="countdown-timer"></p>
       </div>
 
-      <textarea name="message" placeholder="Add a message (optional)"></textarea>
+      <textarea
+        name="message"
+        placeholder="Add a message (optional)"
+      ></textarea>
 
       <!-- Submit button preserved as-is -->
-      <button class="donate-btn" type="button" onclick="handleSubmit()">Submit Donation</button>
+      <button class="donate-btn" type="button" onclick="handleSubmit()">
+        Submit Donation
+      </button>
     </form>
   </div>
 
   <!-- Testimonials (Right) -->
   <div class="testimonial">
     <div class="comment-bubble">
-      <img src="{{ url_for('static', filename='assets/img (2).jpg') }}" alt="Kabir" />
+      <img
+        src="{{ url_for('static', filename='assets/img (2).jpg') }}"
+        alt="Kabir"
+      />
       <div>
         <h4>Kabir</h4>
         <div class="stars">★★★★★</div>
-        <div class="text">"Volunteering changed my perspective. Giving is powerful."</div>
+        <div class="text">
+          "Volunteering changed my perspective. Giving is powerful."
+        </div>
       </div>
     </div>
     <div class="comment-bubble">
-      <img src="{{ url_for('static', filename='assets/img (1).jpg') }}" alt="Ananya" />
+      <img
+        src="{{ url_for('static', filename='assets/img (1).jpg') }}"
+        alt="Ananya"
+      />
       <div>
         <h4>Ananya</h4>
         <div class="stars">★★★★★</div>
-        <div class="text">"I donated stationery kits. The kids’ smiles said everything."</div>
+        <div class="text">
+          "I donated stationery kits. The kids’ smiles said everything."
+        </div>
       </div>
     </div>
     <div class="comment-bubble">
-      <img src="{{ url_for('static', filename='assets/img (4).jpg') }}" alt="Vikram" />
+      <img
+        src="{{ url_for('static', filename='assets/img (4).jpg') }}"
+        alt="Vikram"
+      />
       <div>
         <h4>Vikram</h4>
         <div class="stars">★★★★★</div>
-        <div class="text">"Helping someone in need brought unexpected joy to me too."</div>
+        <div class="text">
+          "Helping someone in need brought unexpected joy to me too."
+        </div>
       </div>
     </div>
   </div>
@@ -162,27 +283,33 @@
       studies: "studyOptions",
     };
 
-    Object.values(map).forEach(id => document.getElementById(id).classList.add("hidden"));
+    // Hide all conditional sections
+    Object.values(map).forEach((id) =>
+      document.getElementById(id).classList.add("hidden")
+    );
     document.getElementById("foodSelfInfo")?.classList.add("hidden");
     document.getElementById("foodCashQR")?.classList.add("hidden");
 
-    if (type === "food") document.getElementById("foodOptions").classList.remove("hidden");
-    else if (map[type]) document.getElementById(map[type]).classList.remove("hidden");
+    // Show selected section
+    if (type === "food")
+      document.getElementById("foodOptions").classList.remove("hidden");
+    else if (map[type])
+      document.getElementById(map[type]).classList.remove("hidden");
 
+    // Start timer for cash donation QR
     if (type === "cash") startTimer("cashTimer", 2);
-   
   }
 
   function showFoodSelf() {
-    document.getElementById("foodSelfInfo")?.classList.remove("hidden");
-    document.getElementById("foodCashQR")?.classList.add("hidden");
+    document.getElementById("foodSelfInfo").classList.remove("hidden");
+    document.getElementById("foodCashQR").classList.add("hidden");
     clearInterval(activeTimers["foodTimer"]);
     document.getElementById("foodTimer").textContent = "";
   }
 
   function showFoodCash() {
-    document.getElementById("foodCashQR")?.classList.remove("hidden");
-    document.getElementById("foodSelfInfo")?.classList.add("hidden");
+    document.getElementById("foodCashQR").classList.remove("hidden");
+    document.getElementById("foodSelfInfo").classList.add("hidden");
     startTimer("foodTimer", 10);
   }
 
@@ -195,7 +322,7 @@
     activeTimers[id] = setInterval(() => {
       const m = Math.floor(time / 60);
       const s = time % 60;
-      el.textContent = `⏳ QR valid for: ${m}:${s.toString().padStart(2, '0')}`;
+      el.textContent = `⏳ QR valid for: ${m}:${s.toString().padStart(2, "0")}`;
       time--;
 
       if (time < 0) {
@@ -213,16 +340,34 @@
       return;
     }
 
-    confetti({ particleCount: 120, spread: 80, origin: { x: 0.2, y: 0.6 } });
-    confetti({ particleCount: 120, spread: 80, origin: { x: 0.8, y: 0.6 } });
+    const fname = form.first_name.value;
+    const lname = form.last_name.value;
+    const email = form.email.value;
+    const phone = form.phone.value;
+    const donationType = form.donation_type.value;
+
+    // Optional: you can also collect extra fields like message, etc.
+    const msg = form.message?.value || "";
+    const amount = "100"; // make dynamic if needed
+
+    // Confetti
+    confetti({ particleCount: 120, spread: 70, origin: { x: 0.2, y: 0.6 } });
+    confetti({ particleCount: 120, spread: 70, origin: { x: 0.8, y: 0.6 } });
 
     setTimeout(() => {
-      alert("Thank you for your donation!");
-      form.submit();
+      const params = new URLSearchParams({
+        name: fname + " " + lname,
+        email: email,
+        phone: phone,
+        type: donationType,
+        message: msg,
+        amount: amount,
+      }).toString();
+
+      window.location.href = `/thankyou?${params}`;
     }, 1500);
   }
 </script>
-
 
 
 {% endblock %}
