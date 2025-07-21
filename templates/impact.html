@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Default Title{% endblock %}</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='component/about.css') }}"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='component/component.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='component/contact.css') }}"
+    />
+
+    <style>
+      .footer-section {
+        background: var(--accent-bg);
+        color: var(--light-text);
+        width: 95%;
+        margin: 0 auto;
+        border-top-left-radius: 5rem;
+        border-top-right-radius: 5rem;
+      }
+
+      .navbar-custom {
+        background-color: var(--accent-bg);
+        color: var(--light-text);
+        position: fixed;
+        top: 0;
+        width: 95%;
+        margin: 0 auto; /* Center the navbar */
+        z-index: 1050;
+        border-bottom: 1px solid #ccc;
+        border-radius: 35px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+    </style>
+  </head>
+
+  <body>
+    {% block content %}
+
+    <nav class="navbar navbar-expand-lg navbar-custom py-3 position-relative">
+      <div class="container position-relative">
+        <a
+          class="navbar-brand text-white fw-bold d-flex align-items-center"
+          href="#"
+        >
+          <img
+            src="{{ url_for('static', filename='assets/logo.png') }}"
+            alt="Logo"
+            class="me-2"
+            height="30"
+          />
+          Give<span class="text-warning">Sync</span>
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+          class="collapse navbar-collapse justify-content-center"
+          id="navbarNav"
+        >
+          <ul class="navbar-nav align-items-lg-center center-links">
+            <li class="nav-item mx-2">
+              <a class="nav-link" href="./" data-text="Home"
+                ><span>Home</span></a
+              >
+            </li>
+            <li class="nav-item mx-2">
+              <a class="nav-link" href="/impact" data-text="About US"
+                ><span>About Us</span></a
+              >
+            </li>
+            <li class="nav-item mx-2">
+              <a class="nav-link" href="./donate" data-text="Donate"
+                ><span>Donate</span></a
+              >
+            </li>
+            <li class="nav-item mx-2">
+              <a class="nav-link" href="/contact" data-text="Contact"
+                ><span>Contact</span></a
+              >
+            </li>
+          </ul>
+          <ul class="navbar-nav ms-auto align-items-lg-center">
+            <li class="nav-item mx-2 d-flex align-items-center text-white">
+              <i class="fas fa-phone-alt me-2"></i> <span>(479) 421-6814</span>
+            </li>
+            <li class="nav-item ms-3">
+              <a href="/login" class="btn donate-btn" title="login Now"
+                ><span>Login Now</span></a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <br />
+
+    <!-- SECTION 1: About the GiveSync -->
+    <section
+      id="about-givesync"
+      class="container py-5"
+      data-aos="fade-up"
+      style="margin-top: 3rem"
+    >
+      <h2 class="mb-4 section-heading">About the GiveSync</h2>
+      <div class="row align-items-center">
+        <!-- ✅ Wrapped image inside a .image div -->
+        <div class="col-md-6 about" data-aos="zoom-in">
+          <div class="image">
+            <img
+              src="{{ url_for('static', filename='assets/n.png') }}"
+              class="img-fluid"
+              id="animated-3d"
+              alt="3D Image"
+            />
+          </div>
+        </div>
+
+        <!-- ✅ Content stays the same -->
+        <div class="col-md-6" data-aos="fade-left">
+          <p>
+            GiveSync is a purpose-driven platform built to bridge the gap
+            between donors and NGOs. With advanced tracking, real-time
+            transparency, and a mission to create meaningful social impact, we
+            make giving smarter, easier, and more impactful. Our platform
+            enables seamless donation matching, project monitoring, and
+            trust-building between contributors and changemakers — all in one
+            place.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: Our Mission -->
+    <section id="our-mission" class="bg-light py-5" data-aos="fade-up">
+      <div class="container">
+        <h2 class="mb-4 section-heading">Our Mission</h2>
+        <div class="row align-items-center">
+          <!-- ➤ Content left -->
+          <div class="col-md-6" data-aos="fade-right">
+            <p>
+              Our mission is to empower every NGO to connect with the right
+              donors and fulfill their needs with unmatched accuracy, speed, and
+              trust. We aim to build a reliable ecosystem where NGOs can
+              showcase their real-time requirements, and donors can contribute
+              with full confidence, knowing exactly how and where their support
+              is making a difference. By leveraging smart technology and
+              transparent systems, GiveSync is redefining how help reaches where
+              it’s needed the most.
+            </p>
+          </div>
+
+          <!-- ➤ Image right with 3D effect -->
+          <div class="col-md-6 text-center" data-aos="zoom-in">
+            <div class="mission-image-wrapper">
+              <img
+                src="{{ url_for('static', filename='assets/n2.png') }}"
+                class="img-fluid mission-img"
+                alt="Mission Image"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- ➤ Cards -->
+        <div class="row text-center mission-cards">
+          {% for card in ['Transparency', 'Quick Matching', 'Verified NGOs'] %}
+          <div
+            class="col-md-4 mb-4"
+            data-aos="fade-up"
+            data-aos-delay="{{ loop.index * 100 }}"
+          >
+            <div class="card premium-card h-100">
+              <h5 class="mb-2">{{ card }}</h5>
+              <p>
+                We ensure {{ card.lower() }} in every donation journey we
+                facilitate.
+              </p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+    <section id="what-we-do" class="py-5 bg-white" data-aos="fade-up">
+      <div class="container">
+        <h2 class="section-heading mb-5">What We Do</h2>
+        <div
+          class="timeline d-flex flex-column align-items-center position-relative"
+        >
+          {% set steps = [ {'title': 'User Registers', 'desc': 'The user signs
+          up on our platform to join the donor community.'}, {'title': 'Uploads
+          Donation Request', 'desc': 'The user fills a form to donate items or
+          funds.'}, {'title': 'NGO Verifies', 'desc': 'Our partnered NGO reviews
+          the request and approves it.'}, {'title': 'Donation Delivered',
+          'desc': 'We ensure the donation reaches the intended NGO or person.'},
+          {'title': 'Impact Tracked', 'desc': 'Track how your donation made a
+          difference with full transparency.'} ] %} {% for step in steps %}
+          <div
+            class="timeline-step text-center"
+            data-aos="fade-up"
+            data-aos-delay="{{ loop.index * 150 }}"
+          >
+            <div class="step-circle">{{ loop.index }}</div>
+            <h5 class="mt-3">{{ step.title }}</h5>
+            <p class="text-muted">{{ step.desc }}</p>
+            {% if not loop.last %}
+            <div class="timeline-line"></div>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: Meet the Team -->
+    <section id="meet-the-team" class="bg-light py-5" data-aos="fade-up">
+      <div class="container">
+        <h2 class="section-heading mb-4">Meet the Team</h2>
+        <div class="row align-items-start">
+          <!-- ➤ Left Content -->
+          <div class="col-md-6" data-aos="fade-right">
+            <p>
+              Our dedicated team works with verified NGOs, ensuring every
+              donation reaches the right place. We collaborate with passionate
+              field officers, data analysts, and local coordinators.
+            </p>
+          </div>
+
+          <!-- ➤ Right NGO Profiles -->
+          <div class="col-md-6">
+            <div class="row text-center">
+              <!-- NGO 1 -->
+              <div class="col-4 mb-3" data-aos="zoom-in" data-aos-delay="100">
+                <img
+                  src="{{ url_for('static', filename='assets/img (1).jpg') }}"
+                  class="img-fluid border shadow"
+                  alt="Helping Hands"
+                  style="
+                    width: 110px;
+                    height: 110px;
+                    object-fit: cover;
+                    border-radius: 50%;
+                    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+                  "
+                />
+                <p class="mt-2 fw-medium">Helping Hands</p>
+              </div>
+
+              <!-- NGO 2 -->
+              <div class="col-4 mb-3" data-aos="zoom-in" data-aos-delay="250">
+                <img
+                  src="{{ url_for('static', filename='assets/img (2).jpg') }}"
+                  class="img-fluid border shadow"
+                  alt="CareBridge"
+                  style="
+                    width: 110px;
+                    height: 110px;
+                    object-fit: cover;
+                    border-radius: 50%;
+                    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+                  "
+                />
+                <p class="mt-2 fw-medium">CareBridge</p>
+              </div>
+
+              <!-- NGO 3 -->
+              <div class="col-4 mb-3" data-aos="zoom-in" data-aos-delay="400">
+                <img
+                  src="{{ url_for('static', filename='assets/img (3).jpg') }}"
+                  class="img-fluid border shadow"
+                  alt="ReliefNet"
+                  style="
+                    width: 110px;
+                    height: 110px;
+                    object-fit: cover;
+                    border-radius: 50%;
+                    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+                  "
+                />
+                <p class="mt-2 fw-medium">ReliefNet</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: Our Collaboration -->
+    <section id="collaboration" class="container py-5" data-aos="fade-up">
+      <h2 class="section-heading mb-4">Our Collaboration</h2>
+      <div class="row">
+        <div class="col-md-4 mb-4" data-aos="flip-up" data-aos-delay="100">
+          <div class="card glass-effect text-center p-3 shadow-lg h-100">
+            <img
+              src="{{ url_for('static', filename='assets/img (4).jpg') }}"
+              class="img-fluid mb-2"
+              alt="UNICEF"
+            />
+            <h5>UNICEF</h5>
+            <p>Working together to extend our impact globally.</p>
+          </div>
+        </div>
+
+        <div class="col-md-4 mb-4" data-aos="flip-up" data-aos-delay="200">
+          <div class="card glass-effect text-center p-3 shadow-lg h-100">
+            <img
+              src="{{ url_for('static', filename='assets/img (5).jpg') }}"
+              class="img-fluid mb-2"
+              alt="Red Cross"
+            />
+            <h5>Red Cross</h5>
+            <p>Working together to extend our impact globally.</p>
+          </div>
+        </div>
+
+        <div class="col-md-4 mb-4" data-aos="flip-up" data-aos-delay="300">
+          <div class="card glass-effect text-center p-3 shadow-lg h-100">
+            <img
+              src="{{ url_for('static', filename='assets/n1.jpg') }}"
+              class="img-fluid mb-2"
+              alt="WHO"
+            />
+            <h5>WHO</h5>
+            <p>Working together to extend our impact globally.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================= -->
+    <!-- Footer Section -->
+    <!-- ======================================= -->
+    <footer class="footer-section pt-5">
+      <div class="container">
+        <!-- CTA -->
+        <div
+          class="row border-bottom pb-4"
+          style="border-color: var(--border-light) !important"
+        >
+          <div class="col-md-4 mb-4">
+            <div class="d-flex">
+              <i class="fas fa-map-marker-alt cta-icon me-3"></i>
+              <div>
+                <h4>Find us</h4>
+                <span
+                  >27 Riverbend Lane, Ashwood District,<br />Mumbai, Maharashtra
+                  – 400072</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-4">
+            <div class="d-flex">
+              <i class="fas fa-phone cta-icon me-3"></i>
+              <div>
+                <h4>Call us</h4>
+                <span>+91 98221 11204</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-4">
+            <div class="d-flex">
+              <i class="far fa-envelope-open cta-icon me-3"></i>
+              <div>
+                <h4>Mail us</h4>
+                <span>support@givesync.org</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="row py-5">
+          <div class="col-lg-4 mb-4 text-center">
+            <img
+              src="{{ url_for('static', filename='assets/logo.png') }}"
+              alt="GiveSync Logo"
+              class="img-fluid mb-2"
+              style="max-width: 150px"
+            />
+            <p class="fw-bold text-white mb-1" style="font-size: 20px">
+              Give<span class="text-warning">Sync</span>
+            </p>
+            <p style="font-size: 14px">
+              GiveSync is a community-driven platform that helps match donors
+              with trusted NGOs, ensuring transparency and real-world impact for
+              every rupee donated.
+            </p>
+            <div
+              class="footer-social-icon d-flex justify-content-center gap-2 mt-3"
+            >
+              <a
+                href="https://facebook.com/givesync"
+                class="facebook-bg"
+                aria-label="Facebook"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a
+                href="https://twitter.com/givesync"
+                class="twitter-bg"
+                aria-label="Twitter"
+                ><i class="fab fa-twitter"></i
+              ></a>
+              <a
+                href="https://instagram.com/givesync"
+                class="google-bg"
+                aria-label="Instagram"
+                ><i class="fab fa-instagram"></i
+              ></a>
+            </div>
+          </div>
+
+          <div class="col-lg-4 mb-4">
+            <div class="footer-widget-heading">
+              <h3>Quick Links</h3>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <ul class="list-unstyled">
+                  <li>
+                    <a href="/"><span>Home</span></a>
+                  </li>
+                  <li>
+                    <a href="/impact"><span>About Us</span></a>
+                  </li>
+                  <li>
+                    <a href="/donate"><span>Donate</span></a>
+                  </li>
+                  <li>
+                    <a href="/contact"><span>Contact</span></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 mb-4">
+            <div class="footer-widget-heading">
+              <h3>Subscribe</h3>
+            </div>
+            <p>
+              Stay updated on our latest drives, stories, and impact reports.
+              Enter your email below:
+            </p>
+            <form class="subscribe-form d-flex mt-3">
+              <input
+                type="email"
+                class="form-control me-2"
+                placeholder="Email Address"
+                aria-label="Email Address"
+              />
+              <button class="btn" type="submit" aria-label="Subscribe">
+                <i class="fab fa-telegram-plane text-white"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Copyright -->
+      <div class="copyright-area py-3">
+        <div class="container text-center">
+          <p class="mb-0">
+            &copy; 2025 GiveSync Foundation. All Rights Reserved. | Designed by
+            <a
+              href="#"
+              class="text-decoration-none"
+              style="color: var(--highlight)"
+              >Neav</a
+            >
+          </p>
+        </div>
+      </div>
+    </footer>
+    {% endblock %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script>
+      const sr = ScrollReveal({
+        distance: "50px",
+        duration: 1000,
+        easing: "ease-in-out",
+        reset: false,
+        viewOffset: { top: 50, bottom: 50 },
+      });
+
+      sr.reveal("#our-mission .col-md-6", { origin: "bottom", interval: 200 });
+      sr.reveal("#our-mission .glass-card", { origin: "top", interval: 150 });
+
+      sr.reveal("#what-we-do .step", { origin: "bottom", interval: 200 });
+      sr.reveal("#what-we-do .arrow", { origin: "top", interval: 150 });
+
+      sr.reveal("#meet-the-team .col-md-6", { origin: "left" });
+      sr.reveal("#meet-the-team img", { origin: "bottom", interval: 150 });
+
+      sr.reveal("#collaboration .card", { origin: "bottom", interval: 150 });
+
+      sr.reveal(".navbar", { origin: "top" });
+      sr.reveal("footer", { origin: "bottom" });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+      AOS.init({ duration: 1000 });
+    </script>
+  </body>
+</html>

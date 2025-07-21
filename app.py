@@ -151,6 +151,11 @@ def thankyou():
 def contact():
     return render_template('contact_faq.html')
 
+@app.route('/impact')
+def impact():
+    return render_template('impact.html')
+
+
 # Run the Flask app
 if __name__ == '__main__':
     app.run(debug=True)

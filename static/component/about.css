@@ -1,0 +1,365 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f7fa;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+h2 {
+    font-family: 'Playfair Display', serif;
+    
+}
+
+p,
+span,
+li,
+h5 {
+    font-family: 'Poppins', sans-serif;
+    
+}
+
+/* Global Section Headings */
+.section-heading {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #D4AF37;
+    /* Golden color */
+    font-weight: 700;
+    position: relative;
+    margin-bottom: 40px;
+    font-family: 'Playfair Display', serif;
+}
+
+.section-heading::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 3px;
+    background-color: #D4AF37;
+    /* Same golden underline */
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+.section-heading span {
+    display: block;
+    font-size: 1rem;
+    color: #999;
+    font-weight: 300;
+    margin-top: 8px;
+}
+
+
+/* ====== About Section ====== */
+.about .image {
+  flex: 1 1 50%;
+  perspective: 1200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: float3D 4s ease-in-out infinite;
+  padding: 20px;
+}
+
+.about .image img {
+  width: 100% !important;
+  max-width: 500px !important;
+  height: 300px !important;
+  object-fit: cover !important;
+  border-radius: 35px !important;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.35) !important;
+  transition: transform 0.6s ease, box-shadow 0.6s ease;
+  transform-style: preserve-3d;
+}
+
+.about .image img:hover {
+  transform: scale(1.05) rotateY(8deg) rotateX(4deg);
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes float3D {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.about .content {
+  flex: 1 1 50%;
+  padding: 0 40px;
+}
+
+.about .content h2 {
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+  font-weight: 700;
+  color: #1586D1;
+}
+
+.about .content p {
+  font-size: 1.2rem;
+  line-height: 2;
+  color: #333;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ====== Mission Section ====== */
+.section-heading {
+  text-align: center;
+  font-size: 2.5rem;
+  color: goldenrod;
+  margin-bottom: 20px;
+  font-weight: 700;
+  position: relative;
+}
+
+.section-heading::after {
+  content: '';
+  width: 60px;
+  height: 4px;
+  background: goldenrod;
+  display: block;
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+
+/* ==== Mission Image Styling ==== */
+.mission-image-wrapper {
+  perspective: 1000px;
+  display: inline-block;
+  animation: float3D 4s ease-in-out infinite;
+}
+
+.mission-img {
+  width: 100%;
+  max-width: 500px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 30px;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.35);
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  transform-style: preserve-3d;
+}
+
+.mission-img:hover {
+  transform: scale(1.05) rotateY(8deg) rotateX(4deg);
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes float3D {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+/* ==== Premium Cards ==== */
+.premium-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  color: #333;
+}
+
+.premium-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.premium-card h5 {
+  color: #1586D1;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.premium-card p {
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+
+/* ====== What We Do Section ====== */
+.timeline {
+  position: relative;
+  padding: 20px 10px;
+}
+
+.timeline-step {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  background: #f9f9f9;
+  padding: 25px;
+  margin-bottom: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.timeline-step:hover {
+  transform: translateY(-5px);
+}
+
+.step-circle {
+  width: 50px;
+  height: 50px;
+  background: #1586D1;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+  border-radius: 50%;
+  line-height: 50px;
+  text-align: center;
+  margin: 0 auto;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.timeline-line {
+  height: 40px;
+  width: 2px;
+  background-color: #1586D1;
+  margin: 20px auto;
+}
+
+
+/* ====== Meet the Team Section ====== */
+.team {
+    padding: 80px 10%;
+    background: #f7fafd;
+}
+
+.team-content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.team .left {
+    flex: 1 1 50%;
+    padding-right: 40px;
+}
+
+.team .right {
+    flex: 1 1 50%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.team .ngo-card {
+    background: #fff;
+    padding: 20px;
+    width: 220px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.team .ngo-card:hover {
+    transform: scale(1.05);
+}
+
+/* ====== Collaboration Section ====== */
+.collab {
+  padding: 80px 10%;
+  background: #f9fbfd;
+}
+
+.collab-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+}
+
+.collab-cards .card {
+  background: linear-gradient(135deg, #2a9df4, #1586d1);
+  color: white;
+  padding: 35px 25px;
+  border-radius: 18px;
+  box-shadow: 0 18px 40px rgba(21, 134, 209, 0.25);
+  transition: transform 0.4s ease, box-shadow 0.3s ease;
+  backdrop-filter: blur(5px);
+  position: relative;
+  overflow: hidden;
+}
+
+.collab-cards .card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1), transparent 70%);
+  transform: rotate(45deg);
+  transition: opacity 0.5s ease;
+  opacity: 0;
+  z-index: 0;
+}
+
+.collab-cards .card:hover::before {
+  opacity: 1;
+}
+
+.collab-cards .card:hover {
+  transform: translateY(-12px) scale(1.03);
+  box-shadow: 0 25px 60px rgba(21, 134, 209, 0.4);
+}
+
+.collab-cards .card img {
+  max-height: 80px;
+  object-fit: contain;
+  margin-bottom: 15px;
+  filter: drop-shadow(0 5px 5px rgba(0,0,0,0.15));
+}
+
+.collab-cards .card h5 {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.collab-cards .card p {
+  font-size: 0.9rem;
+  color: #eef3f8;
+  margin: 0;
+}
+
+
+/* ====== Responsive ====== */
+@media (max-width: 992px) {
+
+    .about,
+    .mission,
+    .team-content {
+        flex-direction: column;
+    }
+
+    .about .content,
+    .mission .content,
+    .team .left,
+    .team .right {
+        padding: 20px 0;
+    }
+
+    .about .image img,
+    .mission .image img {
+        max-width: 100%;
+    }
+}
