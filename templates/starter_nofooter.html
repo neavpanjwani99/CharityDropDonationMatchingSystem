@@ -3,6 +3,7 @@
   <head>
     <title>{% block title %}{% endblock %}</title>
     {% block head %}{% endblock %}
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/logo.png') }}">
   </head>
   <body>
     {% block content %}{% endblock %}

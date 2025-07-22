@@ -118,10 +118,8 @@ def admin_starter():
     return render_template('admin_starter.html')
 
 @app.route('/admin/dashboard')
-def admin_dashboard():
-    if not session.get('admin_logged_in'):
-        return redirect(url_for('login'))
-
+def admin_dashboard():  
+    # is me se session hata diya hai (insert it (If logedin then only admin open ho ese route karke na ho open (for all)))
     stats = [
         {"title": "Total Donation", "value": "₹15,000"},
         {"title": "Total Donors", "value": "45"},
@@ -146,6 +144,7 @@ def admin_dashboard():
         chart_labels=chart_labels,
         chart_data=chart_data
     )
+
 @app.route('/add-cause', methods=['GET', 'POST'])
 def add_cause():
     if not session.get('admin_logged_in'):
