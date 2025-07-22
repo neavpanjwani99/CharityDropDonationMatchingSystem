@@ -4,32 +4,25 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import re
 from datetime import datetime
 
-
 app = Flask(__name__)
-app.secret_key = 'giveSyncSuperSecretKey'  # Required for flashing messages
-
-
-# Home
+app.secret_key = 'giveSyncSuperSecretKey'
 
 # MySQL Config
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''  # blank by default in XAMPP
+app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'charitydrop'
 
 mysql = MySQL(app)
-
 
 @app.route('/')
 def home():
     return render_template('home.html')
 
-# Donate Page
 @app.route('/donate')
 def donate():
     return render_template('donate.html')
 
-# Login Page
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -37,25 +30,23 @@ def login():
         email = request.form['email']
         password = request.form['password']
 
-        # Fetch user with matching email and role
         cursor = mysql.connection.cursor()
         cursor.execute("SELECT * FROM users WHERE email = %s AND role = %s", (email, role))
         user = cursor.fetchone()
         cursor.close()
 
         if user:
-            db_password = user[2]  # assuming password is the 3rd column (index 2)
+            db_password = user[2]
             if check_password_hash(db_password, password):
-                # ✅ Store user info in session
                 session['email'] = email
                 session['role'] = role
 
-                flash("✅ Login successful!", "success")
-
-                # Redirect based on role
                 if role == 'admin':
-                    return redirect('/admin/dashboard')  # Create this page separately
+                    session['admin_logged_in'] = True  # ✅ required to access /add-cause
+                    flash("✅ Admin login successful!", "success")
+                    return redirect('/admin/dashboard')
                 else:
+                    flash("✅ Login successful!", "success")
                     return redirect('/')
             else:
                 flash("❌ Incorrect password.", "danger")
@@ -65,7 +56,6 @@ def login():
     return render_template('login.html')
 
 
-# Register Page
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -80,33 +70,14 @@ def register():
         phone = request.form.get('phone')
         address = request.form.get('address')
 
-
-        # Basic email format validation
-        # Email validation
- 
         if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
             flash(" Invalid email format.", "danger")
             return render_template("register.html")
-
-
-        # Check if passwords match
-
-
         if password != confirm:
             flash(" Passwords do not match.", "danger")
             return render_template("register.html")
 
-
-        # Future: Save to DB here
-        # Example:
-        # save_user_to_db(email=email, password=hash(password))
-
-        flash("Registration successful!", "success")
-        return redirect(url_for("login"))
-
-        # Hash the password before storing
         hashed_password = generate_password_hash(password)
-
         try:
             cursor = mysql.connection.cursor()
             cursor.execute("""
@@ -115,38 +86,25 @@ def register():
             """, (email, hashed_password, twitter, facebook, gplus, fname, lname, phone, address))
             mysql.connection.commit()
             cursor.close()
-
             flash("✅ Registration successful!", "success")
             return redirect(url_for("login"))
-
         except Exception as e:
             flash(f"❌ Error: {str(e)}", "danger")
             return render_template("register.html")
-
-
     return render_template("register.html")
 
 @app.route('/thankyou')
 def thankyou():
-    fullName = request.args.get('fullName', 'Donor')
-    phone = request.args.get('phone', '')
-    email = request.args.get('email', '')
-    course = request.args.get('course', 'Donation')
-    total = request.args.get('total', '')
-    paid = request.args.get('paid', '')
-    date = datetime.now().strftime("%d-%m-%Y")
-
-    return render_template(
-        'thankyou.html',
-        fullName=fullName,
-        phone=phone,
-        email=email,
-        course=course,
-        total=total,
-        paid=paid,
-        date=date
+    return render_template('thankyou.html',
+        fullName=request.args.get('fullName', 'Donor'),
+        phone=request.args.get('phone', ''),
+        email=request.args.get('email', ''),
+        course=request.args.get('course', 'Donation'),
+        total=request.args.get('total', ''),
+        paid=request.args.get('paid', ''),
+        date=datetime.now().strftime("%d-%m-%Y")
     )
-    
+
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     return render_template('contact_faq.html')
@@ -155,7 +113,54 @@ def contact():
 def impact():
     return render_template('impact.html')
 
+@app.route('/admin/starter')
+def admin_starter():
+    return render_template('admin_starter.html')
 
-# Run the Flask app
+@app.route('/admin/dashboard')
+def admin_dashboard():
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('login'))
+
+    stats = [
+        {"title": "Total Donation", "value": "₹15,000"},
+        {"title": "Total Donors", "value": "45"},
+        {"title": "Transactions", "value": "50"},
+        {"title": "Avg Donation", "value": "₹333"},
+    ]
+    donors = [
+        {"name": "Ravi", "email": "ravi@example.com", "amount": 1000, "date": "2025-07-20", "status": "Success"},
+    ]
+    latest_donations = [
+        {"name": "Asha", "email": "asha@example.com", "amount": 1500, "date": "2025-07-21", "method": "UPI"},
+        {"name": "Raju", "email": "raju@example.com", "amount": 2000, "date": "2025-07-19", "method": "Card"},
+    ]
+    chart_labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"]
+    chart_data = [500, 1000, 750, 1200, 1800, 1600]
+
+    return render_template("admin_home.html",
+        admin_name="Neav",
+        stats=stats,
+        donors=donors,
+        latest_donations=latest_donations,
+        chart_labels=chart_labels,
+        chart_data=chart_data
+    )
+@app.route('/add-cause', methods=['GET', 'POST'])
+def add_cause():
+    if not session.get('admin_logged_in'):
+        flash("You must be logged in as admin to access this page.", "warning")
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        title = request.form['title']
+        description = request.form['description']
+        # Save to DB logic placeholder
+        flash('✅ New cause added successfully!', 'success')
+        return redirect(url_for('admin_dashboard'))
+
+    return render_template('addcause.html')
+
+
 if __name__ == '__main__':
     app.run(debug=True)

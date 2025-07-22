@@ -1,0 +1,60 @@
+{% extends 'admin_starter.html' %}
+{% block title %}Add Cause{% endblock %}
+{% block content %}
+<style>
+  .glass-form {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 30px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease;
+  }
+
+  .glass-form:hover {
+    transform: scale(1.01);
+  }
+
+  .form-label {
+    color: black;
+    font-weight: 600;
+  }
+
+  .btn-gold {
+    background: linear-gradient(135deg, gold, orange);
+    color: white;
+    border: none;
+    font-weight: 600;
+  }
+
+  .btn-gold:hover {
+    background: gold;
+    color: black;
+  }
+</style>
+
+
+<section class="container py-5">
+  <h2 class="text-center mb-4" style="color: gold;">Add New Cause</h2>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <form method="POST" action="{{ url_for('add_cause') }}" class="glass-form">
+        <div class="mb-3">
+          <label for="causeName" class="form-label">Cause Title</label>
+          <input type="text" name="title" class="form-control" id="causeName" placeholder="e.g., Health, Education" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="causeDescription" class="form-label">Description</label>
+          <textarea name="description" class="form-control" id="causeDescription" rows="4" placeholder="Describe the cause briefly..." required></textarea>
+        </div>
+
+        <div class="d-grid">
+          <button type="submit" class="btn btn-gold">Add Cause</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}
