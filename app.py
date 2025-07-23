@@ -7,7 +7,6 @@ import csv
 from flask_mysqldb import MySQL
 from werkzeug.security import generate_password_hash, check_password_hash
 import re
-from datetime import datetime
 import geocoder
 import requests     # For geolocation (if needed, but not used in this code)
 
@@ -26,73 +25,100 @@ mysql = MySQL(app)
 def home():
     return render_template('home.html')
 
-@app.route('/donate')
+#@app.route('/donate')
+#def donate():
+#    return render_template('donate.html')
+
+#  Donation Form Submission
+@app.route('/donate', methods=['GET', 'POST'])
 def donate():
+    if request.method == 'POST':
+        form = request.form
+
+        first_name = form.get('first_name')
+        last_name = form.get('last_name')
+        email = form.get('email')
+        phone = form.get('phone')
+        donation_type = form.get('donation_type')
+        food_option = form.get('food_option')
+        study_items = ', '.join(request.form.getlist('study_items'))
+        cash_purpose = form.get('cash_purpose')
+        message = form.get('message')
+        amount = 100.00  # Replace with dynamic if needed
+
+        user_id = session.get('user_id', None)
+
+        cursor = mysql.connection.cursor()
+        cursor.execute("""
+            INSERT INTO donations (user_id, first_name, last_name, email, phone, donation_type, 
+                                   food_option, study_items, cash_purpose, message, amount)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        """, (user_id, first_name, last_name, email, phone, donation_type, 
+              food_option, study_items, cash_purpose, message, amount))
+        mysql.connection.commit()
+        cursor.close()
+
+        # 3. Redirect to thank you page with details
+        full_name = f"{first_name} {last_name}"
+        return redirect(
+            f"/thankyou?fullName={full_name}&email={email}&phone={phone}"
+            f"&course={donation_type}&total={amount}&paid={amount}"
+        )
+
     return render_template('donate.html')
+
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
-
+        email = request.form.get('email')
+        password = request.form.get('password')
 
         cursor = mysql.connection.cursor()
-        cursor.execute("SELECT * FROM users WHERE email = %s", (email,role))
+        cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
         user = cursor.fetchone()
-        cursor.close()
 
         if user:
             db_password = user[2]
-            role = user[10]  # adjust index if needed
+            role = user[10]
+
             if check_password_hash(db_password, password):
-                session['email'] = email
+                session['user_id'] = user[0]
+                session['email'] = user[1]
                 session['role'] = role
 
+                # ✅ Get public IP
+                try:
+                    ip = requests.get('https://api64.ipify.org?format=json').json()['ip']
+                except Exception:
+                    ip = 'Unknown'
+
+                # ✅ Get location from public IP
+                g = geocoder.ip(ip)
+                city = g.city if g.ok else 'Unknown'
+                country = g.country if g.ok else 'Unknown'
+                now = datetime.now()
+
+                # ✅ Save login log with geolocation
+                cursor.execute("""
+                    INSERT INTO login_logs (user_id, ip_address, city, country, login_time, role)
+                    VALUES (%s, %s, %s, %s, %s, %s)
+                """, (user[0], ip, city, country, now, role))
+                mysql.connection.commit()
+                cursor.close()
+
                 if role == 'admin':
-                    session['admin_logged_in'] = True  # ✅ required to access /add-cause
+                    session['admin_logged_in'] = True
                     flash("✅ Admin login successful!", "success")
                     return redirect('/admin/dashboard')
                 else:
-                    flash("✅ Login successful!", "success")
+                    flash("✅ User login successful!", "success")
                     return redirect('/')
             else:
                 flash("❌ Incorrect password.", "danger")
-        #backend ka part 
-        cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM users WHERE email = %s", (email,))
-        user = cur.fetchone()
-
-        if user and check_password_hash(user[2], password):  # user[2] = password
-            session['user_id'] = user[0]
-            session['email'] = user[1]
-            session['role'] = user[10]  # adjust index if needed
-
-            # ✅ Get actual public IP using ipify
-            try:
-                res = requests.get("https://api64.ipify.org?format=json").json()
-                ip = res["ip"]
-            except Exception:
-                ip = 'Unknown'
-
-            # ✅ Get city and country from public IP
-            g = geocoder.ip(ip)
-            city = g.city if g.ok else 'Unknown'
-            country = g.country if g.ok else 'Unknown'
-            now = datetime.now()
-
-            # 📝 Save login log
-            cur.execute("""
-                INSERT INTO login_logs (user_id, ip_address, city, country, login_time)
-                VALUES (%s, %s, %s, %s, %s)
-            """, (user[0], ip, city, country, now))
-            mysql.connection.commit()
-
-            flash("Login successful!", "success")
-            return redirect('/')
-
         else:
-            flash("Invalid credentials.", "danger")
+            flash("❌ Email not found.", "danger")
 
     return render_template("login.html")
 

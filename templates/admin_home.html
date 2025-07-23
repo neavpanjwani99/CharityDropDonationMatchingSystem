@@ -133,14 +133,17 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+  const chartLabels = JSON.parse('{{ chart_labels | tojson | safe }}');
+  const chartData = JSON.parse('{{ chart_data | tojson | safe }}');
+
   const ctx = document.getElementById('donationChart').getContext('2d');
   const chart = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: {{ chart_labels | tojson }},
+      labels: chartLabels,
       datasets: [{
         label: 'Monthly Donations',
-        data: {{ chart_data | tojson }},
+        data: chartData,
         fill: true,
         borderColor: 'gold',
         backgroundColor: 'rgba(255,215,0,0.2)',
@@ -157,7 +160,8 @@
         y: { ticks: { color: 'white' } }
       }
     }
-  });
+  });
+
 
   document.getElementById('searchInput').addEventListener('keyup', function () {
     const filter = this.value.toLowerCase();
