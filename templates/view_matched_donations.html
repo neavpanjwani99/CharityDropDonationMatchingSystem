@@ -1,0 +1,110 @@
+{% extends 'admin_starter.html' %}
+{% block title %}Matched Donations{% endblock %}
+{% block content %}
+
+<style>
+  .glass-table {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .glass-table table {
+    width: 100%;
+    border-collapse: collapse;
+    color: black;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .glass-table th,
+  .glass-table td {
+    padding: 12px 16px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .glass-table th {
+    background: linear-gradient(135deg, gold, orange);
+    color: white;
+  }
+
+  .glass-table tr:hover {
+    background-color: #f9f9f9;
+  }
+
+  .btn-download {
+    background: linear-gradient(135deg, gold, orange);
+    color: white;
+    font-weight: 600;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    float: right;
+  }
+
+  .btn-download:hover {
+    background-color: gold;
+    color: black;
+  }
+
+  .section-heading {
+    color: gold;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+  }
+
+  
+</style>
+
+<section class="container py-5">
+  <h2 class="section-heading">Matched Donations</h2>
+
+  <!-- CSV Download Button -->
+  <form method="GET" action="{{ url_for('download_matched_csv') }}">
+  <button type="submit" class="btn-download mb-3" style="margin-left: 50px;margin-top:5rem;">Download CSV</button>
+</form>
+
+
+  <!-- Donation Table -->
+  <div class="glass-table table-responsive">
+    <table>
+      <thead>
+        <tr>
+          <th>Donor Name</th>
+          <th>Donor Email</th>
+          <th>Donated Cause</th>
+          <th>Amount Donated</th>
+          <th>Matched NGO</th>
+          <th>Date of Donation</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for donation in matched_donations %}
+        <tr>
+          <td>{{ donation.donor_name }}</td>
+          <td>{{ donation.donor_email }}</td>
+          <td>{{ donation.cause }}</td>
+          <td>₹{{ donation.amount }}</td>
+          <td>{{ donation.partner_name }}</td>
+          <td>{{ donation.date.strftime('%d %b %Y') }}</td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="6">No matched donations found.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+{% endblock %}

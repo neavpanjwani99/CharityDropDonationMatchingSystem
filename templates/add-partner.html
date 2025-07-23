@@ -1,0 +1,110 @@
+{% extends 'admin_starter.html' %}
+{% block title %}Add Partner{% endblock %}
+{% block content %}
+
+<style>
+  .glass-form {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 30px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease;
+  }
+
+  .glass-form:hover {
+    transform: scale(1.01);
+  }
+
+  .form-label {
+    color: black;
+    font-weight: 600;
+  }
+
+  .btn-gold {
+    background: linear-gradient(135deg, gold, orange);
+    color: white;
+    border: none;
+    font-weight: 600;
+  }
+
+  .btn-gold:hover {
+    background: gold;
+    color: black;
+  }
+</style>
+
+<section class="container py-5">
+  <h2 class="text-center mb-4" style="color: gold;">Add New Partner</h2>
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <form method="POST" action="{{ url_for('add_partner') }}" class="glass-form">
+
+        <!-- Partner Name -->
+        <div class="mb-3">
+          <label for="partnerName" class="form-label">Partner Name</label>
+          <input type="text" name="partner_name" class="form-control" id="partnerName" placeholder="Please Enter Partner Name" required>
+        </div>
+
+        <!-- Match Ratio -->
+        <div class="mb-3">
+          <label for="matchRatio" class="form-label">Match Ratio</label>
+          <select name="match_ratio" class="form-select" id="matchRatio" required onchange="toggleCustomRatio()">
+            <option disabled selected>Please Select Match Ratio</option>
+            <option value="1:1">1:1 (Equal Match)</option>
+            <option value="2:1">2:1 (Partner doubles donation)</option>
+            <option value="3:1">3:1 (Partner triples donation)</option>
+            <option value="Others">Others</option>
+          </select>
+        </div>
+
+        <!-- Custom Match Ratio Field -->
+        <div class="mb-3" id="customRatioField" style="display: none;">
+          <label for="custom_ratio" class="form-label">Specify Custom Match Ratio</label>
+          <input type="text" name="custom_ratio" class="form-control" id="custom_ratio" placeholder="Please Enter Custom Match Ratio">
+        </div>
+
+        <!-- Contact Email -->
+        <div class="mb-3">
+          <label for="contactEmail" class="form-label">Contact Email</label>
+          <input type="email" name="email" class="form-control" id="contactEmail" placeholder="Please Enter Email I'D">
+        </div>
+
+        <!-- Partner Note -->
+        <div class="mb-3">
+          <label for="partnerNote" class="form-label">Additional Note</label>
+          <textarea name="note" class="form-control" id="partnerNote" rows="3" placeholder="Please Add a note or description..."></textarea>
+        </div>
+
+        <!-- Submit -->
+        <div class="d-grid">
+          <button type="submit" class="btn btn-gold">Add Partner</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- JavaScript for "Others" -->
+<script>
+  function toggleCustomRatio() {
+    const matchRatio = document.getElementById('matchRatio').value;
+    const customField = document.getElementById('customRatioField');
+    const customInput = document.getElementById('custom_ratio');
+
+    if (matchRatio === 'Others') {
+      customField.style.display = 'block';
+      customInput.required = true;
+    } else {
+      customField.style.display = 'none';
+      customInput.required = false;
+    }
+  }
+
+  // Call on page load (if already pre-filled)
+  window.onload = toggleCustomRatio;
+</script>
+
+{% endblock %}

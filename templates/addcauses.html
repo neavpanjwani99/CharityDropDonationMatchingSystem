@@ -38,18 +38,59 @@
 <section class="container py-5">
   <h2 class="text-center mb-4" style="color: gold;">Add New Cause</h2>
   <div class="row justify-content-center">
-    <div class="col-md-6">
-      <form method="POST" action="{{ url_for('add_cause') }}" class="glass-form">
+    <div class="col-md-8">
+      <form method="POST" action="{{ url_for('add_cause') }}" enctype="multipart/form-data" class="glass-form">
+        
+        <!-- Cause Title -->
         <div class="mb-3">
           <label for="causeName" class="form-label">Cause Title</label>
-          <input type="text" name="title" class="form-control" id="causeName" placeholder="e.g., Health, Education" required>
+          <input type="text" name="title" class="form-control" id="causeName" placeholder="Please Enter Cause Title" required>
         </div>
 
+        <!-- Duration -->
+        <div class="mb-3">
+          <label for="duration" class="form-label">Duration (in days)</label>
+          <input type="number" name="duration" class="form-control" id="duration" placeholder="Pleace Enter Duration" required>
+        </div>
+
+        <!-- Target Amount -->
+        <div class="mb-3">
+          <label for="target" class="form-label">Target Amount (INR)</label>
+          <input type="number" name="target_amount" class="form-control" id="target" placeholder="Please Enter Targeted Amount" required>
+        </div>
+
+        <!-- Category Dropdown -->
+        <div class="mb-3">
+          <label for="category" class="form-label">Category</label>
+          <select name="category" class="form-select" id="category" required>
+            <option disabled selected>Please Select a category</option>
+            <option value="Health">Health</option>
+            <option value="Education">Education</option>
+            <option value="Environment">Environment</option>
+            <option value="Animal Welfare">Animal Welfare</option>
+            <option value="Others">Others</option>
+          </select>
+        </div>
+
+          <!-- Other Category Reason Input (Hidden Initially) -->
+        <div class="mb-3" id="otherReasonField" style="display: none;">
+          <label for="other_reason" class="form-label">Please Specify Your Reason</label>
+          <input type="text" name="other_reason" class="form-control" id="other_reason" placeholder="Please Enter your custom cause name">
+        </div>
+
+        <!-- Optional Image Upload -->
+        <div class="mb-3">
+          <label for="causeImage" class="form-label">Cause Image (optional)</label>
+          <input type="file" name="image" class="form-control" id="causeImage" accept="image/*">
+        </div>
+
+        <!-- Description -->
         <div class="mb-3">
           <label for="causeDescription" class="form-label">Description</label>
-          <textarea name="description" class="form-control" id="causeDescription" rows="4" placeholder="Describe the cause briefly..." required></textarea>
+          <textarea name="description" class="form-control" id="causeDescription" rows="4" placeholder="Please Describe the cause briefly..." required></textarea>
         </div>
 
+        <!-- Submit -->
         <div class="d-grid">
           <button type="submit" class="btn btn-gold">Add Cause</button>
         </div>
@@ -57,4 +98,28 @@
     </div>
   </div>
 </section>
+
+<script>
+  function toggleOtherField() {
+    const category = document.getElementById('category').value;
+    const otherField = document.getElementById('otherReasonField');
+    if (category === 'Others') {
+      otherField.style.display = 'block';
+      document.getElementById('other_reason').required = true;
+    } else {
+      otherField.style.display = 'none';
+      document.getElementById('other_reason').required = false;
+    }
+  }
+
+  // 🔁 Call once on page load (in case "Others" is already selected)
+  window.onload = function () {
+    toggleOtherField();
+  };
+
+  // 🔄 Also update on change
+  document.getElementById('category').addEventListener('change', toggleOtherField);
+</script>
+
+
 {% endblock %}

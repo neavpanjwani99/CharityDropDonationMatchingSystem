@@ -1,4 +1,9 @@
-from flask import Flask, render_template, request, redirect, flash, url_for, session
+
+from flask import Flask, Response, render_template, request, redirect, flash, url_for, session
+from flask import send_file
+from datetime import datetime
+import io
+import csv
 from flask_mysqldb import MySQL
 from werkzeug.security import generate_password_hash, check_password_hash
 import re
@@ -158,7 +163,63 @@ def add_cause():
         flash('✅ New cause added successfully!', 'success')
         return redirect(url_for('admin_dashboard'))
 
-    return render_template('addcause.html')
+    return render_template('addcauses.html')
+
+@app.route('/add-partner', methods=['POST', 'GET'])
+def add_partner():
+    if request.method == 'POST':
+        name = request.form['partner_name']
+        ratio = request.form['match_ratio']
+        email = request.form.get('email')
+        note = request.form.get('note')
+
+        # Add to DB logic here...
+        flash('Partner added successfully!', 'success')
+        return redirect(url_for('dashboard'))
+
+    return render_template('add-partner.html')
+
+@app.route('/download_matched_csv', methods=['GET'])
+def download_matched_csv():
+    data = [
+        ['Donor Name', 'Partner NGO', 'Amount', 'Cause'],
+        ['Neav', 'Helping Hands', '500', 'Education'],
+        ['Manya', 'Relief Org', '1000', 'Food']
+    ]
+
+    output = io.StringIO()
+    writer = csv.writer(output)
+    writer.writerows(data)
+    output.seek(0)
+
+    return send_file(
+        io.BytesIO(output.getvalue().encode()),
+        mimetype='text/csv',
+        as_attachment=True,
+        download_name='matched_donations.csv'
+    )
+    
+@app.route('/view_matched_donations')
+def view_matched_donations():
+    matched_donations = [
+        {
+            'donor_name': 'Neav',
+            'donor_email': 'neav@gmail.com',
+            'cause': 'Education',
+            'amount': 500,
+            'partner_name': 'Helping Hands',
+            'date': datetime(2024, 7, 20)
+        },
+        {
+            'donor_name': 'Manya',
+            'donor_email': 'manya@gmail.com',
+            'cause': 'Food',
+            'amount': 1000,
+            'partner_name': 'Relief Org',
+            'date': datetime(2024, 7, 18)
+        }
+    ]
+    return render_template('view_matched_donations.html', matched_donations=matched_donations)
 
 
 if __name__ == '__main__':
