@@ -8,6 +8,8 @@ from flask_mysqldb import MySQL
 from werkzeug.security import generate_password_hash, check_password_hash
 import re
 from datetime import datetime
+import geocoder
+import requests     # For geolocation (if needed, but not used in this code)
 
 app = Flask(__name__)
 app.secret_key = 'giveSyncSuperSecretKey'
@@ -31,17 +33,18 @@ def donate():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        role = request.form['role']
         email = request.form['email']
         password = request.form['password']
 
+
         cursor = mysql.connection.cursor()
-        cursor.execute("SELECT * FROM users WHERE email = %s AND role = %s", (email, role))
+        cursor.execute("SELECT * FROM users WHERE email = %s", (email,role))
         user = cursor.fetchone()
         cursor.close()
 
         if user:
             db_password = user[2]
+            role = user[10]  # adjust index if needed
             if check_password_hash(db_password, password):
                 session['email'] = email
                 session['role'] = role
@@ -55,11 +58,43 @@ def login():
                     return redirect('/')
             else:
                 flash("❌ Incorrect password.", "danger")
+        #backend ka part 
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM users WHERE email = %s", (email,))
+        user = cur.fetchone()
+
+        if user and check_password_hash(user[2], password):  # user[2] = password
+            session['user_id'] = user[0]
+            session['email'] = user[1]
+            session['role'] = user[10]  # adjust index if needed
+
+            # ✅ Get actual public IP using ipify
+            try:
+                res = requests.get("https://api64.ipify.org?format=json").json()
+                ip = res["ip"]
+            except Exception:
+                ip = 'Unknown'
+
+            # ✅ Get city and country from public IP
+            g = geocoder.ip(ip)
+            city = g.city if g.ok else 'Unknown'
+            country = g.country if g.ok else 'Unknown'
+            now = datetime.now()
+
+            # 📝 Save login log
+            cur.execute("""
+                INSERT INTO login_logs (user_id, ip_address, city, country, login_time)
+                VALUES (%s, %s, %s, %s, %s)
+            """, (user[0], ip, city, country, now))
+            mysql.connection.commit()
+
+            flash("Login successful!", "success")
+            return redirect('/')
+
         else:
-            flash("❌ Invalid email or role.", "danger")
+            flash("Invalid credentials.", "danger")
 
-    return render_template('login.html')
-
+    return render_template("login.html")
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -76,10 +111,13 @@ def register():
         address = request.form.get('address')
 
         if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-            flash(" Invalid email format.", "danger")
+            flash("Invalid email format.", "danger")
             return render_template("register.html")
+
+
+
         if password != confirm:
-            flash(" Passwords do not match.", "danger")
+            flash("Passwords do not match.", "danger")
             return render_template("register.html")
 
         hashed_password = generate_password_hash(password)
@@ -96,7 +134,11 @@ def register():
         except Exception as e:
             flash(f"❌ Error: {str(e)}", "danger")
             return render_template("register.html")
+
+
+
     return render_template("register.html")
+
 
 @app.route('/thankyou')
 def thankyou():
