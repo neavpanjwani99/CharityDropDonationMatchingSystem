@@ -333,40 +333,40 @@ endblock %} {% block content %}
     }, 1000);
   }
 
-  function handleSubmit() {
-    const form = document.getElementById("donationForm");
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      return;
-    }
-
-    const fname = form.first_name.value;
-    const lname = form.last_name.value;
-    const email = form.email.value;
-    const phone = form.phone.value;
-    const donationType = form.donation_type.value;
-
-    // Optional: you can also collect extra fields like message, etc.
-    const msg = form.message?.value || "";
-    const amount = "100"; // make dynamic if needed
-
-    // Confetti
-    confetti({ particleCount: 120, spread: 70, origin: { x: 0.2, y: 0.6 } });
-    confetti({ particleCount: 120, spread: 70, origin: { x: 0.8, y: 0.6 } });
-
-    setTimeout(() => {
-      const params = new URLSearchParams({
-        name: fname + " " + lname,
-        email: email,
-        phone: phone,
-        type: donationType,
-        message: msg,
-        amount: amount,
-      }).toString();
-
-      window.location.href = `/thankyou?${params}`;
-    }, 1500);
+  async function handleSubmit() {
+  const form = document.getElementById("donationForm");
+  if (!form.checkValidity()) {
+    form.reportValidity();
+    return;
   }
+
+  const formData = new FormData(form);
+
+  const response = await fetch("/donate", {
+    method: "POST",
+    body: formData,
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+
+    if (data.redirect) {
+      // Show confetti first
+      confetti({ particleCount: 120, spread: 70, origin: { x: 0.2, y: 0.6 } });
+      confetti({ particleCount: 120, spread: 70, origin: { x: 0.8, y: 0.6 } });
+
+      // Delay before redirect
+      setTimeout(() => {
+        window.location.href = data.redirect;
+      }, 1500);
+    } else {
+      alert("Server did not return a redirect URL.");
+    }
+  } else {
+    alert("Something went wrong. Please try again.");
+  }
+}
+
 </script>
 
 

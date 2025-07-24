@@ -7,6 +7,7 @@ import csv
 from flask_mysqldb import MySQL
 from werkzeug.security import generate_password_hash, check_password_hash
 import re
+from flask_mail import Mail, Message    # For contact form email
 import geocoder
 import requests     # For geolocation (if needed, but not used in this code)
 
@@ -21,6 +22,18 @@ app.config['MYSQL_DB'] = 'charitydrop'
 
 mysql = MySQL(app)
 
+
+# ---------- MAIL CONFIG ----------
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'charitydropa@gmail.com'
+app.config['MAIL_PASSWORD'] = 'zema qqmt yqar uobb'  # NOT Gmail password. Use App Password
+app.config['MAIL_DEFAULT_SENDER'] = 'charitydropa@gmail.com'
+
+mail = Mail(app)
+
+# ---------- ROUTES ----------
 @app.route('/')
 def home():
     return render_template('home.html')
@@ -30,6 +43,8 @@ def home():
 #    return render_template('donate.html')
 
 #  Donation Form Submission
+from flask import jsonify, request, redirect, render_template, session
+
 @app.route('/donate', methods=['GET', 'POST'])
 def donate():
     if request.method == 'POST':
@@ -41,31 +56,34 @@ def donate():
         phone = form.get('phone')
         donation_type = form.get('donation_type')
         food_option = form.get('food_option')
-        study_items = ', '.join(request.form.getlist('study_items'))
+        study_items = ', '.join(form.getlist('study_items'))
         cash_purpose = form.get('cash_purpose')
         message = form.get('message')
         amount = 100.00  # Replace with dynamic if needed
-
         user_id = session.get('user_id', None)
 
-        cursor = mysql.connection.cursor()
-        cursor.execute("""
-            INSERT INTO donations (user_id, first_name, last_name, email, phone, donation_type, 
-                                   food_option, study_items, cash_purpose, message, amount)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-        """, (user_id, first_name, last_name, email, phone, donation_type, 
-              food_option, study_items, cash_purpose, message, amount))
-        mysql.connection.commit()
-        cursor.close()
+        try:
+            cursor = mysql.connection.cursor()
+            cursor.execute("""
+                INSERT INTO donations (user_id, first_name, last_name, email, phone, donation_type, 
+                                       food_option, study_items, cash_purpose, message, amount)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, (user_id, first_name, last_name, email, phone, donation_type, 
+                  food_option, study_items, cash_purpose, message, amount))
+            mysql.connection.commit()
+            cursor.close()
+        except Exception as e:
+            print("DB Error:", e)
+            return jsonify({"error": "DB error"}), 500
 
-        # 3. Redirect to thank you page with details
         full_name = f"{first_name} {last_name}"
-        return redirect(
-            f"/thankyou?fullName={full_name}&email={email}&phone={phone}"
-            f"&course={donation_type}&total={amount}&paid={amount}"
-        )
+        redirect_url = f"/thankyou?fullName={full_name}&email={email}&phone={phone}&course={donation_type}&total={amount}&paid={amount}"
+
+        # Return JSON with redirect URL (for JS fetch to handle)
+        return jsonify({"redirect": redirect_url})
 
     return render_template('donate.html')
+
 
 
 
@@ -178,9 +196,60 @@ def thankyou():
         date=datetime.now().strftime("%d-%m-%Y")
     )
 
+#@app.route('/contact', methods=['GET', 'POST'])
+#def contact():
+ #   return render_template('contact_faq.html')
+
+ # ---------- CONTACT ROUTE ----------
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
+    if request.method == 'POST':
+        name = request.form.get('name')
+        email = request.form.get('email')
+        subject = request.form.get('subject')
+        message = request.form.get('message')
+        user_id = session.get('user_id')  # if user is logged in
+
+        if not all([name, email, subject, message]):
+            flash("All fields are required.", "danger")
+            return redirect('/contact')
+
+        # INSERT into MySQL
+        cursor = mysql.connection.cursor()
+        cursor.execute("""
+            INSERT INTO contact_messages (user_id, name, email, subject, message)
+            VALUES (%s, %s, %s, %s, %s)
+        """, (user_id, name, email, subject, message))
+        mysql.connection.commit()
+        cursor.close()
+
+        # SEND EMAIL to Admin
+        try:
+            msg = Message(
+                subject=f"[Contact Form] {subject}",
+                recipients=['charitydropa@gmail.com'],
+                body=f"""
+                        📬 New Contact Message
+
+                        From: {name}
+                        Email: {email}
+                        User ID: {user_id or 'Guest'}
+
+                        Subject: {subject}
+
+                        Message:
+                            {message}
+                                    """
+            )
+            mail.send(msg)
+        except Exception as e:
+            print("Mail send error:", e)
+            flash("❌ Something went wrong. Please try again later.", "danger")
+            return redirect('/contact')
+
+
     return render_template('contact_faq.html')
+
 
 @app.route('/impact')
 def impact():
