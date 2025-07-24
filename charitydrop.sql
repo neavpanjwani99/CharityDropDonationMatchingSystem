@@ -3,11 +3,10 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 23, 2025 at 09:38 PM
+-- Generation Time: Jul 24, 2025 at 09:16 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
-SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -21,6 +20,29 @@ SET time_zone = "+00:00";
 --
 -- Database: `charitydrop`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contact_messages`
+--
+
+CREATE TABLE `contact_messages` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `email` varchar(150) DEFAULT NULL,
+  `subject` varchar(150) DEFAULT NULL,
+  `message` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `contact_messages`
+--
+
+INSERT INTO `contact_messages` (`id`, `user_id`, `name`, `email`, `subject`, `message`, `created_at`) VALUES
+(1, 1, 'Meena Nirvan', 'meenanirvan@gmail.com', 'want to meet the developer', 'ABCD WOWW!!', '2025-07-24 18:21:37');
 
 -- --------------------------------------------------------
 
@@ -43,6 +65,15 @@ CREATE TABLE `donations` (
   `message` text DEFAULT NULL,
   `donation_time` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `donations`
+--
+
+INSERT INTO `donations` (`id`, `user_id`, `first_name`, `last_name`, `email`, `phone`, `donation_type`, `food_option`, `cash_purpose`, `amount`, `study_items`, `message`, `donation_time`) VALUES
+(1, 1, 'Meena', 'Nirvan', 'meena@gmail.com', '8768809876', 'studies', NULL, '', 100.00, 'Books, Pen', 'ejkbkj', '2025-07-24 15:23:01'),
+(2, 1, 'Meena', 'Nirvan', 'meena@gmail.com', '8768809876', 'studies', NULL, '', 100.00, 'Books, Pen', 'ejkbkj', '2025-07-24 15:23:07'),
+(3, 1, 'Meena', 'Nirvan', 'meena@gmail.com', '8768809876', 'studies', NULL, '', 100.00, 'Books, Pen', 'dhruuf', '2025-07-24 15:27:42');
 
 -- --------------------------------------------------------
 
@@ -72,7 +103,14 @@ INSERT INTO `login_logs` (`id`, `user_id`, `ip_address`, `city`, `country`, `log
 (5, 1, '8.8.8.8', 'Mountain View', 'US', '2025-07-21 21:52:37', NULL),
 (6, 1, '103.44.117.91', 'Mumbai', 'IN', '2025-07-23 23:56:25', 'donor'),
 (7, 4, '103.44.117.91', 'Mumbai', 'IN', '2025-07-23 23:57:40', 'admin'),
-(8, 1, '103.44.117.91', 'Mumbai', 'IN', '2025-07-24 00:37:05', 'donor');
+(8, 1, '103.44.117.91', 'Mumbai', 'IN', '2025-07-24 00:37:05', 'donor'),
+(9, 4, 'Unknown', 'Unknown', 'Unknown', '2025-07-24 10:05:22', 'admin'),
+(10, 1, '103.44.117.91', 'Mumbai', 'IN', '2025-07-24 20:36:03', 'donor'),
+(11, 1, '103.44.117.91', 'Mumbai', 'IN', '2025-07-24 20:52:06', 'donor'),
+(12, 1, '103.44.117.91', 'Mumbai', 'IN', '2025-07-24 20:57:11', 'donor'),
+(13, 4, '103.44.117.91', 'Mumbai', 'IN', '2025-07-24 21:04:12', 'admin'),
+(14, 1, '103.44.117.91', 'Mumbai', 'IN', '2025-07-24 23:50:44', 'donor'),
+(15, 4, '103.44.117.91', 'Mumbai', 'IN', '2025-07-25 00:19:14', 'admin');
 
 -- --------------------------------------------------------
 
@@ -107,6 +145,13 @@ INSERT INTO `users` (`id`, `email`, `password`, `twitter`, `facebook`, `gplus`, 
 --
 
 --
+-- Indexes for table `contact_messages`
+--
+ALTER TABLE `contact_messages`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Indexes for table `donations`
 --
 ALTER TABLE `donations`
@@ -132,16 +177,22 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `contact_messages`
+--
+ALTER TABLE `contact_messages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `donations`
 --
 ALTER TABLE `donations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `login_logs`
 --
 ALTER TABLE `login_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -154,6 +205,12 @@ ALTER TABLE `users`
 --
 
 --
+-- Constraints for table `contact_messages`
+--
+ALTER TABLE `contact_messages`
+  ADD CONSTRAINT `contact_messages_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL;
+
+--
 -- Constraints for table `donations`
 --
 ALTER TABLE `donations`
@@ -164,7 +221,6 @@ ALTER TABLE `donations`
 --
 ALTER TABLE `login_logs`
   ADD CONSTRAINT `login_logs_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
