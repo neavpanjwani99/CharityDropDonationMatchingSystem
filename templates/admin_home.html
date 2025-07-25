@@ -146,20 +146,10 @@
           <h5 class="card-title">Latest Donations</h5>
           <ul class="list-group list-group-flush">
             {% for donation in latest_donations %}
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              {{ donation.name }} - ₹{{ donation.amount }}
-              {% if donation.type == 'cash' %}
-                <span class="badge bg-success"> Cash</span>
-              {% elif donation.type == 'food' %}
-                <span class="badge bg-warning"> Food</span>
-              {% elif donation.type == 'cloth' %}
-                <span class="badge bg-info"> Cloth</span>
-              {% elif donation.type == 'studies' %}
-                <span class="badge bg-secondary">Studies</span>
-              {% else %}
-                <span class="badge bg-dark">Unknown</span>
-              {% endif %}
-            </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ donation.name }} - ₹{{ donation.amount }}
+                <span class="badge bg-{{ donation.badge_class }}">{{ donation.type }}</span>
+              </li>
             {% endfor %}
           </ul>
         </div>

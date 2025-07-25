@@ -2,6 +2,7 @@
 from flask import Flask, Response, render_template, request, redirect, flash, url_for, session
 from flask import send_file
 from datetime import datetime
+import random
 import io
 import csv
 from flask_mysqldb import MySQL
@@ -354,28 +355,38 @@ def admin_dashboard():
             "status": "Success"
         })
 
+    BADGE_CLASSES = [
+    "primary", "secondary", "success", "danger",
+    "warning text-dark", "info text-dark", "dark"
+    ]
+
     # ✅ Latest 4 Donations
     cursor.execute("""
-        SELECT 
-            CONCAT(first_name, ' ', last_name) AS name,
-            email,
-            amount,
-            DATE(donation_time) AS date,
-            donation_type
-        FROM donations
-        ORDER BY donation_time DESC
-        LIMIT 4
+    SELECT 
+        CONCAT(first_name, ' ', last_name) AS name,
+        email,
+        amount,
+        DATE(donation_time) AS date,
+        donation_type
+    FROM donations
+    ORDER BY donation_time DESC
+    LIMIT 4
     """)
     latest_rows = cursor.fetchall()
     latest_donations = []
     for row in latest_rows:
+        donation_type = row[4] if row[4] else "Unknown"
+        badge = random.choice(BADGE_CLASSES)  # 🎨 Random color
+
         latest_donations.append({
             "name": row[0],
             "email": row[1],
             "amount": row[2],
             "date": row[3],
-            "type": row[4] if row[4] else "unknown"
+            "type": donation_type,
+            "badge_class": badge
         })
+
 
     cursor.close()
 
