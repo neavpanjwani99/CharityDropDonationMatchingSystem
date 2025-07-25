@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 25, 2025 at 09:38 PM
+-- Generation Time: Jul 25, 2025 at 09:50 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -111,7 +111,8 @@ INSERT INTO `donations` (`id`, `user_id`, `first_name`, `last_name`, `email`, `p
 (14, 4, 'neav', 'panjwani', 'meenanirvan@gmail.com', '1234', 'cloth', NULL, 'Education', 100.00, '', 'kkya bhai ', '2025-07-25 05:27:37'),
 (15, 1, 'Meena', 'Nirvan', 'meenanirvan@gmail.com', '08169070930', 'cash', NULL, 'Education', 5.00, '', 'ghfuyuf', '2025-07-25 16:46:49'),
 (16, 5, 'Ashok', 'Nirvan', 'ashoknirvan@gmail.com', '8369663943', 'food', 'self', '', 0.00, '', 'ewgrrg', '2025-07-25 17:43:11'),
-(17, 5, 'Ashok', 'Nirvan', 'ashok@gmail.com', '2212412133', '', 'self', 'Other', 0.00, 'Pen, Notebooks, Art materials', 'whqfu3g', '2025-07-25 19:04:58');
+(17, 5, 'Ashok', 'Nirvan', 'ashok@gmail.com', '2212412133', '', 'self', 'Other', 0.00, 'Pen, Notebooks, Art materials', 'whqfu3g', '2025-07-25 19:04:58'),
+(18, 1, 'Ashok', 'Nirvan', 'ashok@gmail.com', '1234', 'Study Materials', NULL, '', 0.00, 'Books, School\r\n          bag', '', '2025-07-25 19:41:12');
 
 -- --------------------------------------------------------
 
@@ -222,7 +223,8 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `email`, `password`, `twitter`, `facebook`, `gplus`, `fname`, `lname`, `phone`, `address`, `role`) VALUES
 (1, 'meena@gmail.com', 'scrypt:32768:8:1$oHYZeyMHu1p7MVdq$4b1c27b412475d7b0bf248e8b6f38746cebe1c26d784eacfb4c2e35fdf069b84be2565ac38a2f4d2220d784f48603f4dfa0e25d159a968562f5260b29741cd84', 'meena12', 'meena_12', 'meena', 'Meena', 'Nirvan', '08169070930', 'grace chs', 'donor'),
 (4, 'manya@gmail.com', 'scrypt:32768:8:1$tGogh0UyRWi9zGHh$d68839fe3dec03f07ba8b31123d97b49bd8d6dd1f41c1654f2517b75028d8c4792b8998c3ed895e090469240b61ba4c29b79517d691c984c5e72436d0e21706f', NULL, NULL, NULL, 'Manya', 'Nirvan', NULL, 'GRACE CHS', 'admin'),
-(5, 'ashok@gmail.com', 'scrypt:32768:8:1$B40V4EcuMtmo1q4v$37ebecd1b0bd8a4161b6aca373edad1867b899f771171e9c6e2ee02b9e235f9153b4c1166c4acbc083e6c50c6dffe3f590e50a7800ad987b5f5a4cc58ef82251', '', '', '', 'Ashok', 'Nirvan', '2212412133', 'grace chs', 'donor');
+(5, 'ashok@gmail.com', 'scrypt:32768:8:1$B40V4EcuMtmo1q4v$37ebecd1b0bd8a4161b6aca373edad1867b899f771171e9c6e2ee02b9e235f9153b4c1166c4acbc083e6c50c6dffe3f590e50a7800ad987b5f5a4cc58ef82251', '', '', '', 'Ashok', 'Nirvan', '2212412133', 'grace chs', 'donor'),
+(6, 'neav.panjwani@gmail.com', 'scrypt:32768:8:1$n3GKIDqCVzYdRmo9$7dfa98d9ede2cbd47532982e7ff35bbe4c04cb0a7eee39072c3729839f77c214c9b002dce5a0e59968a653163485c90efe2b4073db1ab346df0c1128808a6c8b', NULL, NULL, NULL, 'Neav', 'Panjwani', '1233343543', 'Ulhasnagar', 'admin');
 
 --
 -- Indexes for dumped tables
@@ -288,7 +290,7 @@ ALTER TABLE `contact_messages`
 -- AUTO_INCREMENT for table `donations`
 --
 ALTER TABLE `donations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `donation_types`
@@ -306,7 +308,7 @@ ALTER TABLE `login_logs`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
