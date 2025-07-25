@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 24, 2025 at 09:16 PM
+-- Generation Time: Jul 25, 2025 at 09:38 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,29 @@ SET time_zone = "+00:00";
 --
 -- Database: `charitydrop`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `causes`
+--
+
+CREATE TABLE `causes` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `duration` int(11) DEFAULT NULL,
+  `target_amount` decimal(10,2) DEFAULT NULL,
+  `category` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `causes`
+--
+
+INSERT INTO `causes` (`id`, `title`, `duration`, `target_amount`, `category`, `description`, `created_at`) VALUES
+(1, 'XYZ', 20, 1000.00, 'Menstrual Hygiene Kits', 'FOR WOMENS SAFETY', '2025-07-26 00:58:01');
 
 -- --------------------------------------------------------
 
@@ -42,7 +65,8 @@ CREATE TABLE `contact_messages` (
 --
 
 INSERT INTO `contact_messages` (`id`, `user_id`, `name`, `email`, `subject`, `message`, `created_at`) VALUES
-(1, 1, 'Meena Nirvan', 'meenanirvan@gmail.com', 'want to meet the developer', 'ABCD WOWW!!', '2025-07-24 18:21:37');
+(1, 1, 'Meena Nirvan', 'meenanirvan@gmail.com', 'want to meet the developer', 'ABCD WOWW!!', '2025-07-24 18:21:37'),
+(2, 5, 'Ashok Nirvan', 'meenanirvan@gmail.com', 'abx', 'sfvvegt', '2025-07-25 04:39:11');
 
 -- --------------------------------------------------------
 
@@ -57,7 +81,7 @@ CREATE TABLE `donations` (
   `last_name` varchar(100) DEFAULT NULL,
   `email` varchar(150) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL,
-  `donation_type` enum('food','cloth','cash','studies') DEFAULT NULL,
+  `donation_type` varchar(255) DEFAULT NULL,
   `food_option` enum('self','cash') DEFAULT NULL,
   `cash_purpose` varchar(100) DEFAULT NULL,
   `amount` decimal(10,2) DEFAULT NULL,
@@ -73,7 +97,44 @@ CREATE TABLE `donations` (
 INSERT INTO `donations` (`id`, `user_id`, `first_name`, `last_name`, `email`, `phone`, `donation_type`, `food_option`, `cash_purpose`, `amount`, `study_items`, `message`, `donation_time`) VALUES
 (1, 1, 'Meena', 'Nirvan', 'meena@gmail.com', '8768809876', 'studies', NULL, '', 100.00, 'Books, Pen', 'ejkbkj', '2025-07-24 15:23:01'),
 (2, 1, 'Meena', 'Nirvan', 'meena@gmail.com', '8768809876', 'studies', NULL, '', 100.00, 'Books, Pen', 'ejkbkj', '2025-07-24 15:23:07'),
-(3, 1, 'Meena', 'Nirvan', 'meena@gmail.com', '8768809876', 'studies', NULL, '', 100.00, 'Books, Pen', 'dhruuf', '2025-07-24 15:27:42');
+(3, 1, 'Meena', 'Nirvan', 'meena@gmail.com', '8768809876', 'studies', NULL, '', 100.00, 'Books, Pen', 'dhruuf', '2025-07-24 15:27:42'),
+(4, 5, 'Ashok', 'Nirvan', 'ashok@gmail.com', '2212412133', 'cash', NULL, 'Food Relief', 100.00, '', 'djfkhkeufgug', '2025-07-25 04:37:15'),
+(5, 5, 'Ashok', 'Nirvan', 'ashok@gmail.com', '2212412133', 'cash', NULL, '', 100.00, '', '', '2025-07-25 04:42:56'),
+(6, 5, 'Ashok', 'Nirvan', 'ashok@gmail.com', '2212412133', 'cash', NULL, '', 100.00, '', '', '2025-07-25 04:42:56'),
+(7, 5, 'Ashok', 'Nirvan', 'ashok@gmail.com', '2212412133', 'cash', NULL, '', 100.00, '', '', '2025-07-25 04:42:57'),
+(8, 5, 'Ashok', 'Nirvan', 'ashok@gmail.com', '2212412133', 'cash', NULL, '', 100.00, '', '', '2025-07-25 04:42:57'),
+(9, 5, 'Ashok', 'Nirvan', 'ashok@gmail.com', '2212412133', 'cash', NULL, '', 100.00, '', '', '2025-07-25 04:42:57'),
+(10, 4, 'neav', 'panjwani', 'meenanirvan@gmail.com', '1234', 'cash', NULL, 'Education', 100.00, '', '', '2025-07-25 05:26:59'),
+(11, 4, 'neav', 'panjwani', 'meenanirvan@gmail.com', '1234', 'cash', NULL, 'Education', 100.00, '', '', '2025-07-25 05:27:01'),
+(12, 4, 'neav', 'panjwani', 'meenanirvan@gmail.com', '1234', 'cloth', NULL, 'Education', 100.00, '', 'kkya bhai ', '2025-07-25 05:27:36'),
+(13, 4, 'neav', 'panjwani', 'meenanirvan@gmail.com', '1234', 'cloth', NULL, 'Education', 100.00, '', 'kkya bhai ', '2025-07-25 05:27:37'),
+(14, 4, 'neav', 'panjwani', 'meenanirvan@gmail.com', '1234', 'cloth', NULL, 'Education', 100.00, '', 'kkya bhai ', '2025-07-25 05:27:37'),
+(15, 1, 'Meena', 'Nirvan', 'meenanirvan@gmail.com', '08169070930', 'cash', NULL, 'Education', 5.00, '', 'ghfuyuf', '2025-07-25 16:46:49'),
+(16, 5, 'Ashok', 'Nirvan', 'ashoknirvan@gmail.com', '8369663943', 'food', 'self', '', 0.00, '', 'ewgrrg', '2025-07-25 17:43:11'),
+(17, 5, 'Ashok', 'Nirvan', 'ashok@gmail.com', '2212412133', '', 'self', 'Other', 0.00, 'Pen, Notebooks, Art materials', 'whqfu3g', '2025-07-25 19:04:58');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `donation_types`
+--
+
+CREATE TABLE `donation_types` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `donation_types`
+--
+
+INSERT INTO `donation_types` (`id`, `name`, `created_at`) VALUES
+(1, 'Food', '2025-07-26 00:29:18'),
+(2, 'Study Materials', '2025-07-26 00:29:18'),
+(3, 'Cash', '2025-07-26 00:29:38'),
+(4, 'Cloth', '2025-07-26 00:29:38'),
+(5, 'Menstrual Hygiene Kits', '2025-07-26 00:58:01');
 
 -- --------------------------------------------------------
 
@@ -110,7 +171,29 @@ INSERT INTO `login_logs` (`id`, `user_id`, `ip_address`, `city`, `country`, `log
 (12, 1, '103.44.117.91', 'Mumbai', 'IN', '2025-07-24 20:57:11', 'donor'),
 (13, 4, '103.44.117.91', 'Mumbai', 'IN', '2025-07-24 21:04:12', 'admin'),
 (14, 1, '103.44.117.91', 'Mumbai', 'IN', '2025-07-24 23:50:44', 'donor'),
-(15, 4, '103.44.117.91', 'Mumbai', 'IN', '2025-07-25 00:19:14', 'admin');
+(15, 4, '103.44.117.91', 'Mumbai', 'IN', '2025-07-25 00:19:14', 'admin'),
+(16, 5, '2409:40c0:79:bb4e:4e0:238e:845b:1d8e', 'Mumbai', 'IN', '2025-07-25 10:05:08', 'donor'),
+(17, 5, '2409:40c0:79:bb4e:4e0:238e:845b:1d8e', 'Mumbai', 'IN', '2025-07-25 10:10:49', 'donor'),
+(18, 4, '2409:40c0:79:bb4e:4e0:238e:845b:1d8e', 'Mumbai', 'IN', '2025-07-25 10:14:25', 'admin'),
+(19, 4, '103.44.117.91', 'Mumbai', 'IN', '2025-07-25 21:42:06', 'admin'),
+(20, 4, '103.44.117.91', 'Mumbai', 'IN', '2025-07-25 21:49:50', 'admin'),
+(21, 4, '103.44.117.91', 'Mumbai', 'IN', '2025-07-25 22:01:38', 'admin'),
+(22, 1, '103.44.117.91', 'Mumbai', 'IN', '2025-07-25 22:04:49', 'donor'),
+(23, 4, '103.44.117.91', 'Mumbai', 'IN', '2025-07-25 22:14:02', 'admin'),
+(24, 1, '103.44.117.91', 'Mumbai', 'IN', '2025-07-25 22:15:44', 'donor'),
+(25, 4, '103.44.117.91', 'Mumbai', 'IN', '2025-07-25 22:18:23', 'admin'),
+(26, 4, '103.44.117.91', 'Mumbai', 'IN', '2025-07-25 22:33:33', 'admin'),
+(27, 4, '103.44.117.91', 'Mumbai', 'IN', '2025-07-25 22:37:13', 'admin'),
+(28, 4, '103.44.117.91', 'Mumbai', 'IN', '2025-07-25 22:45:07', 'admin'),
+(29, 4, '103.44.117.91', 'Mumbai', 'IN', '2025-07-25 22:46:23', 'admin'),
+(30, 4, '103.44.117.91', 'Mumbai', 'IN', '2025-07-25 22:51:03', 'admin'),
+(31, 5, '103.44.117.91', 'Mumbai', 'IN', '2025-07-25 23:12:39', 'donor'),
+(32, 4, '103.44.117.91', 'Mumbai', 'IN', '2025-07-25 23:22:50', 'admin'),
+(33, 4, '103.44.117.91', 'Mumbai', 'IN', '2025-07-25 23:38:26', 'admin'),
+(34, 5, '103.44.117.91', 'Mumbai', 'IN', '2025-07-26 00:28:16', 'donor'),
+(35, 4, '103.44.117.91', 'Mumbai', 'IN', '2025-07-26 00:38:30', 'admin'),
+(36, 4, '103.44.117.91', 'Mumbai', 'IN', '2025-07-26 00:56:30', 'admin'),
+(37, 1, '103.44.117.91', 'Mumbai', 'IN', '2025-07-26 00:58:51', 'donor');
 
 -- --------------------------------------------------------
 
@@ -138,11 +221,18 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `email`, `password`, `twitter`, `facebook`, `gplus`, `fname`, `lname`, `phone`, `address`, `role`) VALUES
 (1, 'meena@gmail.com', 'scrypt:32768:8:1$oHYZeyMHu1p7MVdq$4b1c27b412475d7b0bf248e8b6f38746cebe1c26d784eacfb4c2e35fdf069b84be2565ac38a2f4d2220d784f48603f4dfa0e25d159a968562f5260b29741cd84', 'meena12', 'meena_12', 'meena', 'Meena', 'Nirvan', '08169070930', 'grace chs', 'donor'),
-(4, 'manya@gmail.com', 'scrypt:32768:8:1$tGogh0UyRWi9zGHh$d68839fe3dec03f07ba8b31123d97b49bd8d6dd1f41c1654f2517b75028d8c4792b8998c3ed895e090469240b61ba4c29b79517d691c984c5e72436d0e21706f', NULL, NULL, NULL, 'Manya', 'Nirvan', NULL, 'GRACE CHS', 'admin');
+(4, 'manya@gmail.com', 'scrypt:32768:8:1$tGogh0UyRWi9zGHh$d68839fe3dec03f07ba8b31123d97b49bd8d6dd1f41c1654f2517b75028d8c4792b8998c3ed895e090469240b61ba4c29b79517d691c984c5e72436d0e21706f', NULL, NULL, NULL, 'Manya', 'Nirvan', NULL, 'GRACE CHS', 'admin'),
+(5, 'ashok@gmail.com', 'scrypt:32768:8:1$B40V4EcuMtmo1q4v$37ebecd1b0bd8a4161b6aca373edad1867b899f771171e9c6e2ee02b9e235f9153b4c1166c4acbc083e6c50c6dffe3f590e50a7800ad987b5f5a4cc58ef82251', '', '', '', 'Ashok', 'Nirvan', '2212412133', 'grace chs', 'donor');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `causes`
+--
+ALTER TABLE `causes`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `contact_messages`
@@ -157,6 +247,12 @@ ALTER TABLE `contact_messages`
 ALTER TABLE `donations`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `donation_types`
+--
+ALTER TABLE `donation_types`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `login_logs`
@@ -177,28 +273,40 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `causes`
+--
+ALTER TABLE `causes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `contact_messages`
 --
 ALTER TABLE `contact_messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `donations`
 --
 ALTER TABLE `donations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `donation_types`
+--
+ALTER TABLE `donation_types`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `login_logs`
 --
 ALTER TABLE `login_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
