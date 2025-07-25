@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 25, 2025 at 09:50 PM
+-- Generation Time: Jul 25, 2025 at 10:28 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -112,7 +112,8 @@ INSERT INTO `donations` (`id`, `user_id`, `first_name`, `last_name`, `email`, `p
 (15, 1, 'Meena', 'Nirvan', 'meenanirvan@gmail.com', '08169070930', 'cash', NULL, 'Education', 5.00, '', 'ghfuyuf', '2025-07-25 16:46:49'),
 (16, 5, 'Ashok', 'Nirvan', 'ashoknirvan@gmail.com', '8369663943', 'food', 'self', '', 0.00, '', 'ewgrrg', '2025-07-25 17:43:11'),
 (17, 5, 'Ashok', 'Nirvan', 'ashok@gmail.com', '2212412133', '', 'self', 'Other', 0.00, 'Pen, Notebooks, Art materials', 'whqfu3g', '2025-07-25 19:04:58'),
-(18, 1, 'Ashok', 'Nirvan', 'ashok@gmail.com', '1234', 'Study Materials', NULL, '', 0.00, 'Books, School\r\n          bag', '', '2025-07-25 19:41:12');
+(18, 1, 'Ashok', 'Nirvan', 'ashok@gmail.com', '1234', 'Study Materials', NULL, '', 0.00, 'Books, School\r\n          bag', '', '2025-07-25 19:41:12'),
+(19, 5, 'Ashok', 'Nirvan', 'ashok@gmail.com', '1234', 'Study Materials', NULL, '', 0.00, 'Pen, Notebooks', '', '2025-07-25 20:00:19');
 
 -- --------------------------------------------------------
 
@@ -194,7 +195,58 @@ INSERT INTO `login_logs` (`id`, `user_id`, `ip_address`, `city`, `country`, `log
 (34, 5, '103.44.117.91', 'Mumbai', 'IN', '2025-07-26 00:28:16', 'donor'),
 (35, 4, '103.44.117.91', 'Mumbai', 'IN', '2025-07-26 00:38:30', 'admin'),
 (36, 4, '103.44.117.91', 'Mumbai', 'IN', '2025-07-26 00:56:30', 'admin'),
-(37, 1, '103.44.117.91', 'Mumbai', 'IN', '2025-07-26 00:58:51', 'donor');
+(37, 1, '103.44.117.91', 'Mumbai', 'IN', '2025-07-26 00:58:51', 'donor'),
+(38, 5, '103.44.117.91', 'Mumbai', 'IN', '2025-07-26 01:29:56', 'donor'),
+(39, 6, '103.44.117.91', 'Mumbai', 'IN', '2025-07-26 01:31:42', 'admin'),
+(40, 4, '103.44.117.91', 'Mumbai', 'IN', '2025-07-26 01:50:00', 'admin'),
+(41, 4, '103.44.117.91', 'Mumbai', 'IN', '2025-07-26 01:55:10', 'admin');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `match_ratios`
+--
+
+CREATE TABLE `match_ratios` (
+  `id` int(11) NOT NULL,
+  `ratio_value` varchar(20) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `match_ratios`
+--
+
+INSERT INTO `match_ratios` (`id`, `ratio_value`, `created_at`) VALUES
+(1, '1:1', '2025-07-26 01:45:18'),
+(2, '2:1', '2025-07-26 01:45:18'),
+(3, '3:1', '2025-07-26 01:45:18'),
+(4, '2:2', '2025-07-26 01:51:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `partners`
+--
+
+CREATE TABLE `partners` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `match_ratio_id` int(11) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `submited_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `partners`
+--
+
+INSERT INTO `partners` (`id`, `name`, `match_ratio_id`, `email`, `note`, `submited_at`) VALUES
+(1, 'Harshika Khatri', 4, 'harshika@gmail.com', 'WHDYDED!!', '2025-07-26 01:51:00'),
+(2, 'Harshika Khatri', 4, 'harshika@gmail.com', 'WHDYDED!!', '2025-07-26 01:51:37'),
+(3, 'Harshika Khatri', 4, 'harshika@gmail.com', 'WHDYDED!!', '2025-07-26 01:52:12'),
+(4, 'Harshika Khatri', 4, 'harshika@gmail.com', 'w3eefq3!!', '2025-07-26 01:55:31');
 
 -- --------------------------------------------------------
 
@@ -264,6 +316,20 @@ ALTER TABLE `login_logs`
   ADD KEY `user_id` (`user_id`);
 
 --
+-- Indexes for table `match_ratios`
+--
+ALTER TABLE `match_ratios`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `ratio_value` (`ratio_value`);
+
+--
+-- Indexes for table `partners`
+--
+ALTER TABLE `partners`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `match_ratio_id` (`match_ratio_id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -290,7 +356,7 @@ ALTER TABLE `contact_messages`
 -- AUTO_INCREMENT for table `donations`
 --
 ALTER TABLE `donations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `donation_types`
@@ -302,7 +368,19 @@ ALTER TABLE `donation_types`
 -- AUTO_INCREMENT for table `login_logs`
 --
 ALTER TABLE `login_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+
+--
+-- AUTO_INCREMENT for table `match_ratios`
+--
+ALTER TABLE `match_ratios`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `partners`
+--
+ALTER TABLE `partners`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -331,6 +409,12 @@ ALTER TABLE `donations`
 --
 ALTER TABLE `login_logs`
   ADD CONSTRAINT `login_logs_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `partners`
+--
+ALTER TABLE `partners`
+  ADD CONSTRAINT `partners_ibfk_1` FOREIGN KEY (`match_ratio_id`) REFERENCES `match_ratios` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
