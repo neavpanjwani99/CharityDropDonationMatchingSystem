@@ -455,17 +455,48 @@ def add_cause():
 
 @app.route('/add-partner', methods=['POST', 'GET'])
 def add_partner():
+    cursor = mysql.connection.cursor()
+
     if request.method == 'POST':
         name = request.form['partner_name']
         ratio = request.form['match_ratio']
+        custom_ratio = request.form.get('custom_ratio')  # Only filled if "Others" is selected
         email = request.form.get('email')
         note = request.form.get('note')
 
-        # Add to DB logic here...
-        flash('Partner added successfully!', 'success')
-        return redirect(url_for('dashboard'))
+        # Decide final ratio to store
+        ratio_value = custom_ratio if ratio == 'Others' else ratio
 
-    return render_template('add-partner.html')
+        # 🔍 Check if ratio exists in match_ratios table
+        cursor.execute("SELECT id FROM match_ratios WHERE ratio_value = %s", (ratio_value,))
+        existing_ratio = cursor.fetchone()
+
+        if existing_ratio:
+            match_ratio_id = existing_ratio[0]
+        else:
+            # 🆕 Insert custom ratio into match_ratios table
+            cursor.execute("INSERT INTO match_ratios (ratio_value) VALUES (%s)", (ratio_value,))
+            mysql.connection.commit()
+            match_ratio_id = cursor.lastrowid
+
+        # ✅ Insert partner with match_ratio_id
+        cursor.execute("""
+            INSERT INTO partners (name, match_ratio_id, email, note)
+            VALUES (%s, %s, %s, %s)
+        """, (name, match_ratio_id, email, note))
+        mysql.connection.commit()
+        cursor.close()
+
+        flash('✅ Partner added successfully!', 'success')
+        return redirect(url_for('admin_dashboard'))
+
+    # For GET request → fetch existing ratios
+    cursor.execute("SELECT ratio_value FROM match_ratios")
+    match_ratios = [row[0] for row in cursor.fetchall()]
+    cursor.close()
+
+    return render_template('add-partner.html', match_ratios=match_ratios)
+
 
 @app.route('/download_matched_csv', methods=['GET'])
 def download_matched_csv():
