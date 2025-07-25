@@ -50,39 +50,64 @@ def donate():
     if request.method == 'POST':
         form = request.form
 
+        # Basic fields
         first_name = form.get('first_name')
         last_name = form.get('last_name')
         email = form.get('email')
         phone = form.get('phone')
-        donation_type = form.get('donation_type')
-        food_option = form.get('food_option')
-        study_items = ', '.join(form.getlist('study_items'))
+        donation_type = form.get('donation_type')  # Selected from dropdown
+        food_option = form.get('food_option')      # Only if type is food
+        study_items = ', '.join(form.getlist('study_items'))  # List to string
         cash_purpose = form.get('cash_purpose')
         message = form.get('message')
-        amount = 100.00  # Replace with dynamic if needed
+
+        # 🟡 Dynamic amount: check cash or food amount
+        cash_amount_raw = form.get('cashAmount') or form.get('foodAmount')
+        try:
+            amount = float(cash_amount_raw) if cash_amount_raw else 0.0
+        except ValueError:
+            amount = 0.0
+
+        # Validate amount for cash
+        if donation_type == 'cash' and amount <= 0:
+            return jsonify({"error": "Please enter a valid cash amount."}), 400
+
+        # Logged-in user ID
         user_id = session.get('user_id', None)
 
         try:
             cursor = mysql.connection.cursor()
             cursor.execute("""
-                INSERT INTO donations (user_id, first_name, last_name, email, phone, donation_type, 
-                                       food_option, study_items, cash_purpose, message, amount)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-            """, (user_id, first_name, last_name, email, phone, donation_type, 
-                  food_option, study_items, cash_purpose, message, amount))
+                INSERT INTO donations (
+                    user_id, first_name, last_name, email, phone, donation_type, 
+                    food_option, study_items, cash_purpose, message, amount
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, (
+                user_id, first_name, last_name, email, phone, donation_type,
+                food_option, study_items, cash_purpose, message, amount
+            ))
             mysql.connection.commit()
             cursor.close()
         except Exception as e:
             print("DB Error:", e)
-            return jsonify({"error": "DB error"}), 500
+            return jsonify({"error": "Database error occurred."}), 500
 
+        # Thank you redirect
         full_name = f"{first_name} {last_name}"
         redirect_url = f"/thankyou?fullName={full_name}&email={email}&phone={phone}&course={donation_type}&total={amount}&paid={amount}"
-
-        # Return JSON with redirect URL (for JS fetch to handle)
         return jsonify({"redirect": redirect_url})
 
-    return render_template('donate.html')
+    else:
+        # 🟡 GET method: fetch donation types from DB for dropdown
+        cursor = mysql.connection.cursor()
+        cursor.execute("SELECT name FROM donation_types")
+        types = cursor.fetchall()
+        donation_types = [t[0] for t in types]
+        cursor.close()
+
+        return render_template('donate.html', donation_types=donation_types)
+
+
 
 
 
@@ -260,31 +285,112 @@ def admin_starter():
     return render_template('admin_starter.html')
 
 @app.route('/admin/dashboard')
-def admin_dashboard():  
-    # is me se session hata diya hai (insert it (If logedin then only admin open ho ese route karke na ho open (for all)))
+def admin_dashboard():
+    if 'admin_logged_in' not in session:
+        flash("Access denied! Please log in as admin.", "danger")
+        return redirect(url_for('login'))
+
+    admin_id = session.get('user_id')
+
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT fname FROM users WHERE id = %s AND role = 'admin'", (admin_id,))
+    admin = cursor.fetchone()
+    admin_name = admin[0] if admin else 'Admin'
+
+    # ✅ Stats
+    cursor.execute("SELECT COUNT(DISTINCT user_id) FROM donations")
+    total_donors = cursor.fetchone()[0]
+
+    cursor.execute("SELECT AVG(amount) FROM donations")
+    avg_donation_result = cursor.fetchone()[0]
+    avg_donation = f"₹{int(avg_donation_result)}" if avg_donation_result else "₹100"
+
+    cursor.execute("SELECT SUM(amount) FROM donations")
+    total_donation_result = cursor.fetchone()[0]
+    total_donation = f"₹{int(total_donation_result)}" if total_donation_result else "₹0"
+
+    cursor.execute("SELECT COUNT(*) FROM donations")
+    transactions = cursor.fetchone()[0]
+    cursor.close()
+
     stats = [
-        {"title": "Total Donation", "value": "₹15,000"},
-        {"title": "Total Donors", "value": "45"},
-        {"title": "Transactions", "value": "50"},
-        {"title": "Avg Donation", "value": "₹333"},
+        {"title": "Total Donation", "value": total_donation},
+        {"title": "Total Donors", "value": total_donors},
+        {"title": "Transactions", "value": transactions},
+        {"title": "Avg Donation", "value": avg_donation},
     ]
-    donors = [
-        {"name": "Ravi", "email": "ravi@example.com", "amount": 1000, "date": "2025-07-20", "status": "Success"},
-    ]
-    latest_donations = [
-        {"name": "Asha", "email": "asha@example.com", "amount": 1500, "date": "2025-07-21", "method": "UPI"},
-        {"name": "Raju", "email": "raju@example.com", "amount": 2000, "date": "2025-07-19", "method": "Card"},
-    ]
+
+    # ✅ Pagination Logic
+    page = int(request.args.get('page', 1))
+    per_page = 5  # Show 5 entries per page
+    offset = (page - 1) * per_page
+
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT COUNT(*) FROM donations")
+    total_donor_count = cursor.fetchone()[0]
+    total_pages = (total_donor_count + per_page - 1) // per_page
+
+    # ✅ Donor list
+    cursor.execute("""
+        SELECT 
+            CONCAT(first_name, ' ', last_name) AS name,
+            email,
+            amount,
+            DATE(donation_time) AS date,
+            donation_type
+        FROM donations
+        ORDER BY donation_time DESC
+        LIMIT %s OFFSET %s
+    """, (per_page, offset))
+    donor_rows = cursor.fetchall()
+    donors = []
+    for row in donor_rows:
+        donors.append({
+            "name": row[0],
+            "email": row[1],
+            "amount": row[2],
+            "date": row[3],
+            "donation_type": row[4],
+            "status": "Success"
+        })
+
+    # ✅ Latest 4 Donations
+    cursor.execute("""
+        SELECT 
+            CONCAT(first_name, ' ', last_name) AS name,
+            email,
+            amount,
+            DATE(donation_time) AS date,
+            donation_type
+        FROM donations
+        ORDER BY donation_time DESC
+        LIMIT 4
+    """)
+    latest_rows = cursor.fetchall()
+    latest_donations = []
+    for row in latest_rows:
+        latest_donations.append({
+            "name": row[0],
+            "email": row[1],
+            "amount": row[2],
+            "date": row[3],
+            "type": row[4] if row[4] else "unknown"
+        })
+
+    cursor.close()
+
     chart_labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"]
     chart_data = [500, 1000, 750, 1200, 1800, 1600]
 
     return render_template("admin_home.html",
-        admin_name="Neav",
+        admin_name=admin_name,
         stats=stats,
         donors=donors,
         latest_donations=latest_donations,
         chart_labels=chart_labels,
-        chart_data=chart_data
+        chart_data=chart_data,
+        page=page,
+        total_pages=total_pages
     )
 
 @app.route('/add-cause', methods=['GET', 'POST'])
@@ -295,12 +401,46 @@ def add_cause():
 
     if request.method == 'POST':
         title = request.form['title']
+        duration = request.form['duration']
+        target_amount = request.form['target_amount']
+        category = request.form['category']
+        other_reason = request.form.get('other_reason', None)
         description = request.form['description']
-        # Save to DB logic placeholder
-        flash('✅ New cause added successfully!', 'success')
+        image = request.files.get('image')
+
+        # Determine which category to store
+        donation_type_to_store = other_reason if category == 'Others' else category
+
+        cursor = mysql.connection.cursor()
+
+        # ✅ Check if donation_type already exists
+        cursor.execute("SELECT id FROM donation_types WHERE name = %s", (donation_type_to_store,))
+        existing = cursor.fetchone()
+
+        if not existing:
+            cursor.execute("INSERT INTO donation_types (name) VALUES (%s)", (donation_type_to_store,))
+            mysql.connection.commit()
+
+        # ✅ Save cause in causes table
+        cursor.execute("""
+            INSERT INTO causes (title, duration, target_amount, category, description)
+            VALUES (%s, %s, %s, %s, %s)
+        """, (title, duration, target_amount, donation_type_to_store, description))
+        mysql.connection.commit()
+        cursor.close()
+
+        flash("✅ Cause added successfully!", "success")
         return redirect(url_for('admin_dashboard'))
 
-    return render_template('addcauses.html')
+    # GET request → fetch donation types for dropdown
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT name FROM donation_types")
+    types = cursor.fetchall()
+    donation_types = [{"name": t[0]} for t in types]
+    cursor.close()
+
+    return render_template('addcauses.html', donation_types=donation_types)
+
 
 @app.route('/add-partner', methods=['POST', 'GET'])
 def add_partner():

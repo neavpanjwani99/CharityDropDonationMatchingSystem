@@ -62,21 +62,21 @@
         <!-- Category Dropdown -->
         <div class="mb-3">
           <label for="category" class="form-label">Category</label>
-          <select name="category" class="form-select" id="category" required>
-            <option disabled selected>Please Select a category</option>
-            <option value="Health">Health</option>
-            <option value="Education">Education</option>
-            <option value="Environment">Environment</option>
-            <option value="Animal Welfare">Animal Welfare</option>
-            <option value="Others">Others</option>
-          </select>
+            <select name="category" class="form-select" id="category" required>
+              <option disabled selected>Please Select a category</option>
+                {% for type in donation_types %}
+                  <option value="{{ type.name }}">{{ type.name }}</option>
+                {% endfor %}
+              <option value="Others">Others</option>
+            </select>
         </div>
 
-          <!-- Other Category Reason Input (Hidden Initially) -->
-        <div class="mb-3" id="otherReasonField" style="display: none;">
-          <label for="other_reason" class="form-label">Please Specify Your Reason</label>
-          <input type="text" name="other_reason" class="form-control" id="other_reason" placeholder="Please Enter your custom cause name">
-        </div>
+<!-- Other Category Reason Input (Hidden Initially) -->
+<div class="mb-3" id="otherReasonField" style="display: none;">
+  <label for="other_reason" class="form-label">Please Specify Your Reason</label>
+  <input type="text" name="other_reason" class="form-control" id="other_reason" placeholder="Enter custom donation type">
+</div>
+
 
         <!-- Optional Image Upload -->
         <div class="mb-3">

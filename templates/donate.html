@@ -2,27 +2,15 @@
 endblock %} {% block content %}
 
 <!-- Optimized Fonts & Styles -->
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='component/responsive.css') }}"
-/>
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='component/donate.css') }}"
-/>
-<link
-  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
-  rel="stylesheet"
-/>
+<link rel="stylesheet" href="{{ url_for('static', filename='component/responsive.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='component/donate.css') }}" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
 
 <div class="donation-page">
   <!-- Testimonials (Left) -->
   <div class="testimonial">
     <div class="comment-bubble">
-      <img
-        src="{{ url_for('static', filename='assets/img (5).jpg') }}"
-        alt="User 1"
-      />
+      <img src="{{ url_for('static', filename='assets/img (5).jpg') }}" alt="User 1" />
       <div>
         <h4>Ankit</h4>
         <div class="stars">★★★★★</div>
@@ -32,10 +20,7 @@ endblock %} {% block content %}
       </div>
     </div>
     <div class="comment-bubble">
-      <img
-        src="{{ url_for('static', filename='assets/img (3).jpg') }}"
-        alt="User 3"
-      />
+      <img src="{{ url_for('static', filename='assets/img (3).jpg') }}" alt="User 3" />
       <div>
         <h4>Megha</h4>
         <div class="stars">★★★★★</div>
@@ -46,10 +31,7 @@ endblock %} {% block content %}
       </div>
     </div>
     <div class="comment-bubble">
-      <img
-        src="{{ url_for('static', filename='assets/img (6).jpg') }}"
-        alt="User 2"
-      />
+      <img src="{{ url_for('static', filename='assets/img (6).jpg') }}" alt="User 2" />
       <div>
         <h4>Rahul</h4>
         <div class="stars">★★★★☆</div>
@@ -69,99 +51,62 @@ endblock %} {% block content %}
 
     <form method="POST" action="/donate" id="donationForm">
       <div class="row">
-        <div class="col" >
-          <input
-            type="text"
-            name="first_name"
-            placeholder="First Name"
-             id="firstName"
-            required
-          />
+        <div class="col">
+          <input type="text" name="first_name" placeholder="First Name" id="firstName" required />
         </div>
         <div class="col">
-          <input
-            type="text"
-            name="last_name"
-            id="lastName"
-            placeholder="Last Name"
-            required
-          />
+          <input type="text" name="last_name" id="lastName" placeholder="Last Name" required />
         </div>
       </div>
       <input type="email" name="email" placeholder="Email Address" id="email" required />
       <input type="tel" name="phone" placeholder="Phone Number" id="phone" required />
 
-      <select
-        name="donation_type"
-        id="donationType"
-        required
-        onchange="handleDonationTypeChange()"
-      >
-        <option value="">What would you like to donate?</option>
-        <option value="food">Food</option>
-        <option value="cloth">Clothes</option>
-        <option value="cash">Cash</option>
-        <option value="studies">Study Materials</option>
-      </select>
+      
+        <select name="donation_type" id="donationType" required onchange="handleDonationTypeChange()">
+          <option value="">What would you like to donate?</option>
+            {% for type in donation_types %}
+              <option value="{{ type }}">{{ type|capitalize }}</option>
+            {% endfor %}
+        </select>
 
-      <!-- FOOD Section -->
+    
+
+        <!-- FOOD Section -->
       <div id="foodOptions" class="conditional hidden">
         <p class="section-label">Food Donation Options:</p>
-        <label
-          ><input
-            type="radio"
-            name="food_option"
-            value="self"
-            id="foodbymyself"
-            onclick="showFoodSelf()"
-          />
-          I will donate food myself</label
-        >
-        <label
-          ><input
-            type="radio"
-            name="food_option"
-            value="cash"
-            id="foodcash"
-            onclick="showFoodCash()"
-          />
-          I want to donate money for food</label
-        >
+        <label><input type="radio" name="food_option" value="self" id="foodbymyself" onclick="showFoodSelf()" />
+          I will donate food myself</label>
+        <label><input type="radio" name="food_option" value="cash" id="foodcash" onclick="showFoodCash()" />
+          I want to donate money for food</label>
 
         <div id="foodSelfInfo" class="sub-conditional hidden">
           <p>
             <strong>Drop Location:</strong>
-            <a
-              href="https://www.google.com/maps/place/Sector+17,+Vashi,+Navi+Mumbai,+Maharashtra+400703/"
-              target="_blank"
-              class="location-link"
-              >CharityDrop Foundation, Sector 17, Navi Mumbai</a
-            >
+            <a href="https://www.google.com/maps/place/Sector+17,+Vashi,+Navi+Mumbai,+Maharashtra+400703/"
+              target="_blank" class="location-link">CharityDrop Foundation, Sector 17, Navi Mumbai</a>
           </p>
           <p><strong>Timing:</strong> 10 AM – 2 PM</p>
         </div>
 
         <div id="foodCashQR" class="sub-conditional hidden">
           <p>Scan this QR to donate for food:</p>
-          <img
-            src="{{ url_for('static', filename='assets/qr.jpg') }}"
-            class="qr-code"
-            alt="Food QR"
-          />
+          <img src="{{ url_for('static', filename='assets/qr.jpg') }}" class="qr-code" alt="Food QR" />
+
+          <!-- Amount input field added here -->
+          <input type="number" id="foodAmount" name="foodAmount" placeholder="Enter amount" class="amount-input" min="1"
+            step="1" style="margin-top: 10px; padding: 5px; width: 200px;" />
+
           <p id="foodTimer" class="countdown-timer"></p>
         </div>
+
       </div>
 
       <!-- CLOTH Section -->
       <div id="clothInfo" class="conditional hidden">
         <p>
           <strong>Drop Location:</strong>
-          <a
-            href="https://www.google.com/maps/place/Sector+17,+Vashi,+Navi+Mumbai,+Maharashtra+400703/"
-            target="_blank"
-            class="location-link"
-            >CharityDrop Foundation</a
-          >
+          <a href="https://www.google.com/maps/place/Sector+17,+Vashi,+Navi+Mumbai,+Maharashtra+400703/" target="_blank"
+            class="location-link">CharityDrop Foundation</a>
         </p>
         <p><strong>Timing:</strong> 9 AM – 6 PM</p>
         <p id="clothTimer" class="countdown-timer"></p>
@@ -177,14 +122,17 @@ endblock %} {% block content %}
           <option value="Food Relief">Food Relief</option>
           <option value="Other">Other</option>
         </select>
+
         <p>Scan to donate:</p>
-        <img
-          src="{{ url_for('static', filename='assets/qr.jpg') }}"
-          class="qr-code"
-          alt="Cash QR"
-        />
+        <img src="{{ url_for('static', filename='assets/qr.jpg') }}" class="qr-code" alt="Cash QR" />
+
+        <!-- Amount input field moved below QR -->
+        <input type="number" id="cashAmount" name="cashAmount" placeholder="Enter amount" class="amount-input" min="1"
+          step="1" style="margin-top: 10px; padding: 5px; width: 200px;" />
+
         <p id="cashTimer" class="countdown-timer"></p>
       </div>
+
 
       <!-- STUDY Section -->
       <div id="studyOptions" class="conditional hidden">
@@ -193,29 +141,30 @@ endblock %} {% block content %}
           {% for item in ['Books', 'Pen', 'Pencil', 'Geometry box', 'School
           bag', 'Notebooks', 'Art materials', 'Calculator', 'Exam sheets',
           'Stationery kit'] %}
-          <label
-            ><input type="checkbox" name="study_items" value="{{ item }}" /> {{
-            item }}</label
-          >
+          <label><input type="checkbox" name="study_items" value="{{ item }}" /> {{
+            item }}</label>
           {% endfor %}
         </div>
         <p>
           <strong>Drop Location:</strong>
-          <a
-            href="https://www.google.com/maps/place/Sector+17,+Vashi,+Navi+Mumbai,+Maharashtra+400703/"
-            target="_blank"
-            class="location-link"
-            >CharityDrop Foundation</a
-          >
+          <a href="https://www.google.com/maps/place/Sector+17,+Vashi,+Navi+Mumbai,+Maharashtra+400703/" target="_blank"
+            class="location-link">CharityDrop Foundation</a>
         </p>
         <p><strong>Timing:</strong> 11 AM – 4 PM</p>
         <p id="studyTimer" class="countdown-timer"></p>
       </div>
 
-      <textarea
-        name="message"
-        placeholder="Add a message (optional)"
-      ></textarea>
+      <textarea name="message" placeholder="Add a message (optional)"></textarea>
+
+      <!-- CUSTOM Donation Type Section (e.g., "Menstrual hygiene kits") -->
+        <div id="customInfo" class="conditional hidden">
+          <p><strong>Drop Location:</strong>
+            <a href="https://www.google.com/maps/place/Sector+17,+Vashi,+Navi+Mumbai,+Maharashtra+400703/"
+              target="_blank" class="location-link">CharityDrop Foundation, Sector 17, Navi Mumbai</a>
+          </p>
+          <p><strong>Timing:</strong> 12 PM – 5 PM</p>
+        </div>
+
 
       <!-- Submit button preserved as-is -->
       <button class="donate-btn" type="button" onclick="handleSubmit()">
@@ -227,10 +176,7 @@ endblock %} {% block content %}
   <!-- Testimonials (Right) -->
   <div class="testimonial">
     <div class="comment-bubble">
-      <img
-        src="{{ url_for('static', filename='assets/img (2).jpg') }}"
-        alt="Kabir"
-      />
+      <img src="{{ url_for('static', filename='assets/img (2).jpg') }}" alt="Kabir" />
       <div>
         <h4>Kabir</h4>
         <div class="stars">★★★★★</div>
@@ -240,10 +186,7 @@ endblock %} {% block content %}
       </div>
     </div>
     <div class="comment-bubble">
-      <img
-        src="{{ url_for('static', filename='assets/img (1).jpg') }}"
-        alt="Ananya"
-      />
+      <img src="{{ url_for('static', filename='assets/img (1).jpg') }}" alt="Ananya" />
       <div>
         <h4>Ananya</h4>
         <div class="stars">★★★★★</div>
@@ -253,10 +196,7 @@ endblock %} {% block content %}
       </div>
     </div>
     <div class="comment-bubble">
-      <img
-        src="{{ url_for('static', filename='assets/img (4).jpg') }}"
-        alt="Vikram"
-      />
+      <img src="{{ url_for('static', filename='assets/img (4).jpg') }}" alt="Vikram" />
       <div>
         <h4>Vikram</h4>
         <div class="stars">★★★★★</div>
@@ -275,50 +215,60 @@ endblock %} {% block content %}
   const activeTimers = {};
 
   function handleDonationTypeChange() {
-    const type = document.getElementById("donationType").value;
-    const map = {
-      food: "foodOptions",
-      cloth: "clothInfo",
-      cash: "cashQR",
-      studies: "studyOptions",
-    };
+    const type = document.getElementById("donationType").value.toLowerCase();
+
+    const allSections = [
+      "foodOptions",
+      "clothInfo",
+      "cashQR",
+      "studyOptions",
+      "foodSelfInfo",
+      "foodCashQR",
+      "customInfo"
+    ];
 
     // Hide all conditional sections
-    Object.values(map).forEach((id) =>
-      document.getElementById(id).classList.add("hidden")
-    );
-    document.getElementById("foodSelfInfo")?.classList.add("hidden");
-    document.getElementById("foodCashQR")?.classList.add("hidden");
+    allSections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) el.classList.add("hidden");
+    });
 
-    // Show selected section
-    if (type === "food")
-      document.getElementById("foodOptions").classList.remove("hidden");
-    else if (map[type])
-      document.getElementById(map[type]).classList.remove("hidden");
-
-    // Start timer for cash donation QR
-    if (type === "cash") startTimer("cashTimer", 2);
+    // Smart match known types
+    if (type.includes("food")) {
+      document.getElementById("foodOptions")?.classList.remove("hidden");
+    } else if (type.includes("cloth")) {
+      document.getElementById("clothInfo")?.classList.remove("hidden");
+    } else if (type.includes("cash") || type.includes("money")) {
+      document.getElementById("cashQR")?.classList.remove("hidden");
+      startTimer("cashTimer", 2); // Cash QR timer
+    } else if (type.includes("study") || type.includes("education")) {
+      document.getElementById("studyOptions")?.classList.remove("hidden");
+    } else {
+      // If custom or unknown type (like "Blankets", "Hygiene kits")
+      document.getElementById("customInfo")?.classList.remove("hidden");
+    }
   }
 
   function showFoodSelf() {
-    document.getElementById("foodSelfInfo").classList.remove("hidden");
-    document.getElementById("foodCashQR").classList.add("hidden");
+    document.getElementById("foodSelfInfo")?.classList.remove("hidden");
+    document.getElementById("foodCashQR")?.classList.add("hidden");
     clearInterval(activeTimers["foodTimer"]);
     document.getElementById("foodTimer").textContent = "";
   }
 
   function showFoodCash() {
-    document.getElementById("foodCashQR").classList.remove("hidden");
-    document.getElementById("foodSelfInfo").classList.add("hidden");
+    document.getElementById("foodCashQR")?.classList.remove("hidden");
+    document.getElementById("foodSelfInfo")?.classList.add("hidden");
     startTimer("foodTimer", 10);
   }
 
   function startTimer(id, mins) {
     const el = document.getElementById(id);
     if (!el) return;
-    clearInterval(activeTimers[id]);
 
+    clearInterval(activeTimers[id]);
     let time = mins * 60;
+
     activeTimers[id] = setInterval(() => {
       const m = Math.floor(time / 60);
       const s = time % 60;
@@ -328,46 +278,45 @@ endblock %} {% block content %}
       if (time < 0) {
         clearInterval(activeTimers[id]);
         el.textContent = "QR Expired";
-        document.querySelector(".donate-btn").disabled = true;
+        document.querySelector(".donate-btn")?.setAttribute("disabled", true);
       }
     }, 1000);
   }
 
   async function handleSubmit() {
-  const form = document.getElementById("donationForm");
-  if (!form.checkValidity()) {
-    form.reportValidity();
-    return;
-  }
-
-  const formData = new FormData(form);
-
-  const response = await fetch("/donate", {
-    method: "POST",
-    body: formData,
-  });
-
-  if (response.ok) {
-    const data = await response.json();
-
-    if (data.redirect) {
-      // Show confetti first
-      confetti({ particleCount: 120, spread: 70, origin: { x: 0.2, y: 0.6 } });
-      confetti({ particleCount: 120, spread: 70, origin: { x: 0.8, y: 0.6 } });
-
-      // Delay before redirect
-      setTimeout(() => {
-        window.location.href = data.redirect;
-      }, 1500);
-    } else {
-      alert("Server did not return a redirect URL.");
+    const form = document.getElementById("donationForm");
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
     }
-  } else {
-    alert("Something went wrong. Please try again.");
-  }
-}
 
+    const formData = new FormData(form);
+
+    const response = await fetch("/donate", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+
+      if (data.redirect) {
+        confetti({ particleCount: 120, spread: 70, origin: { x: 0.2, y: 0.6 } });
+        confetti({ particleCount: 120, spread: 70, origin: { x: 0.8, y: 0.6 } });
+
+        setTimeout(() => {
+          window.location.href = data.redirect;
+        }, 1500);
+      } else {
+        alert("Server did not return a redirect URL.");
+      }
+    } else {
+      alert("Something went wrong. Please try again.");
+    }
+  }
 </script>
+
+
 
 
 {% endblock %}
