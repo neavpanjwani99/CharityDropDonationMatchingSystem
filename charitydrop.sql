@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 25, 2025 at 10:28 PM
+-- Generation Time: Jul 26, 2025 at 05:02 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -42,7 +42,8 @@ CREATE TABLE `causes` (
 --
 
 INSERT INTO `causes` (`id`, `title`, `duration`, `target_amount`, `category`, `description`, `created_at`) VALUES
-(1, 'XYZ', 20, 1000.00, 'Menstrual Hygiene Kits', 'FOR WOMENS SAFETY', '2025-07-26 00:58:01');
+(1, 'XYZ', 20, 1000.00, 'Menstrual Hygiene Kits', 'FOR WOMENS SAFETY', '2025-07-26 00:58:01'),
+(2, 'Winter Clothes', 20, 1500.00, 'Winter Clothes', 'FHRWH', '2025-07-26 08:27:33');
 
 -- --------------------------------------------------------
 
@@ -113,7 +114,8 @@ INSERT INTO `donations` (`id`, `user_id`, `first_name`, `last_name`, `email`, `p
 (16, 5, 'Ashok', 'Nirvan', 'ashoknirvan@gmail.com', '8369663943', 'food', 'self', '', 0.00, '', 'ewgrrg', '2025-07-25 17:43:11'),
 (17, 5, 'Ashok', 'Nirvan', 'ashok@gmail.com', '2212412133', '', 'self', 'Other', 0.00, 'Pen, Notebooks, Art materials', 'whqfu3g', '2025-07-25 19:04:58'),
 (18, 1, 'Ashok', 'Nirvan', 'ashok@gmail.com', '1234', 'Study Materials', NULL, '', 0.00, 'Books, School\r\n          bag', '', '2025-07-25 19:41:12'),
-(19, 5, 'Ashok', 'Nirvan', 'ashok@gmail.com', '1234', 'Study Materials', NULL, '', 0.00, 'Pen, Notebooks', '', '2025-07-25 20:00:19');
+(19, 5, 'Ashok', 'Nirvan', 'ashok@gmail.com', '1234', 'Study Materials', NULL, '', 0.00, 'Pen, Notebooks', '', '2025-07-25 20:00:19'),
+(20, 9, 'Pushpa', 'Vishwakarma', 'pushpa@gmail.com', '9822314256', 'Cash', NULL, 'Food Relief', 5.00, '', '', '2025-07-26 02:53:08');
 
 -- --------------------------------------------------------
 
@@ -136,7 +138,8 @@ INSERT INTO `donation_types` (`id`, `name`, `created_at`) VALUES
 (2, 'Study Materials', '2025-07-26 00:29:18'),
 (3, 'Cash', '2025-07-26 00:29:38'),
 (4, 'Cloth', '2025-07-26 00:29:38'),
-(5, 'Menstrual Hygiene Kits', '2025-07-26 00:58:01');
+(5, 'Menstrual Hygiene Kits', '2025-07-26 00:58:01'),
+(6, 'Winter Clothes', '2025-07-26 08:27:33');
 
 -- --------------------------------------------------------
 
@@ -199,7 +202,9 @@ INSERT INTO `login_logs` (`id`, `user_id`, `ip_address`, `city`, `country`, `log
 (38, 5, '103.44.117.91', 'Mumbai', 'IN', '2025-07-26 01:29:56', 'donor'),
 (39, 6, '103.44.117.91', 'Mumbai', 'IN', '2025-07-26 01:31:42', 'admin'),
 (40, 4, '103.44.117.91', 'Mumbai', 'IN', '2025-07-26 01:50:00', 'admin'),
-(41, 4, '103.44.117.91', 'Mumbai', 'IN', '2025-07-26 01:55:10', 'admin');
+(41, 4, '103.44.117.91', 'Mumbai', 'IN', '2025-07-26 01:55:10', 'admin'),
+(42, 9, '2409:40c0:1024:bfbf:643b:a7b:e2a9:cca9', 'Mumbai', 'IN', '2025-07-26 08:21:15', 'donor'),
+(43, 6, '2409:40c0:1024:bfbf:643b:a7b:e2a9:cca9', 'Mumbai', 'IN', '2025-07-26 08:24:20', 'admin');
 
 -- --------------------------------------------------------
 
@@ -276,7 +281,10 @@ INSERT INTO `users` (`id`, `email`, `password`, `twitter`, `facebook`, `gplus`, 
 (1, 'meena@gmail.com', 'scrypt:32768:8:1$oHYZeyMHu1p7MVdq$4b1c27b412475d7b0bf248e8b6f38746cebe1c26d784eacfb4c2e35fdf069b84be2565ac38a2f4d2220d784f48603f4dfa0e25d159a968562f5260b29741cd84', 'meena12', 'meena_12', 'meena', 'Meena', 'Nirvan', '08169070930', 'grace chs', 'donor'),
 (4, 'manya@gmail.com', 'scrypt:32768:8:1$tGogh0UyRWi9zGHh$d68839fe3dec03f07ba8b31123d97b49bd8d6dd1f41c1654f2517b75028d8c4792b8998c3ed895e090469240b61ba4c29b79517d691c984c5e72436d0e21706f', NULL, NULL, NULL, 'Manya', 'Nirvan', NULL, 'GRACE CHS', 'admin'),
 (5, 'ashok@gmail.com', 'scrypt:32768:8:1$B40V4EcuMtmo1q4v$37ebecd1b0bd8a4161b6aca373edad1867b899f771171e9c6e2ee02b9e235f9153b4c1166c4acbc083e6c50c6dffe3f590e50a7800ad987b5f5a4cc58ef82251', '', '', '', 'Ashok', 'Nirvan', '2212412133', 'grace chs', 'donor'),
-(6, 'neav.panjwani@gmail.com', 'scrypt:32768:8:1$n3GKIDqCVzYdRmo9$7dfa98d9ede2cbd47532982e7ff35bbe4c04cb0a7eee39072c3729839f77c214c9b002dce5a0e59968a653163485c90efe2b4073db1ab346df0c1128808a6c8b', NULL, NULL, NULL, 'Neav', 'Panjwani', '1233343543', 'Ulhasnagar', 'admin');
+(6, 'neav.panjwani@gmail.com', 'scrypt:32768:8:1$n3GKIDqCVzYdRmo9$7dfa98d9ede2cbd47532982e7ff35bbe4c04cb0a7eee39072c3729839f77c214c9b002dce5a0e59968a653163485c90efe2b4073db1ab346df0c1128808a6c8b', NULL, NULL, NULL, 'Neav', 'Panjwani', '1233343543', 'Ulhasnagar', 'admin'),
+(7, 'janesh@gmail.com', 'scrypt:32768:8:1$E1TVpmZd1n3C6bY3$3729636a14aa78cc05bd74cb0cd21a6a8d447c8a9376211bb32adf40249b184ba606f0937ac18f180565140f845a388bbd9074b0a44282e76a3857a2f04b796a', 'unknown', 'unknown', 'unknown', 'Janesh', 'Chichriya', '9822314256', 'unr-1', 'donor'),
+(8, 'rajanipandey@gmail.com', 'scrypt:32768:8:1$MiGH4xkmJ3i5JOO9$3ab81bf8bc70fe9bd85602114bcd49ffca7000ff7771c240cb3da068fe19ac66e2dd17f0383b1f58744495fe56d8853b332a85e7e2218e972f9f600bf26be120', 'unknown', 'unknown', 'unknown', 'rajani', 'pandey', '9822317456', 'unr-4', 'donor'),
+(9, 'pushpa@gmail.com', 'scrypt:32768:8:1$fLzkubMaaktu4BQD$cf17372f05c71591b25f4749c3442fc9520590fe3ffc08623f51fe136648c3966d8b01c9499f77b853c806186493f60ac3164544bbadf6186986772a2f9d70a9', 'unknown', 'unknown', 'unknown', 'pushpa', 'mam', '9822314256', 'chembur', 'donor');
 
 --
 -- Indexes for dumped tables
@@ -344,7 +352,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `causes`
 --
 ALTER TABLE `causes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `contact_messages`
@@ -356,19 +364,19 @@ ALTER TABLE `contact_messages`
 -- AUTO_INCREMENT for table `donations`
 --
 ALTER TABLE `donations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `donation_types`
 --
 ALTER TABLE `donation_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `login_logs`
 --
 ALTER TABLE `login_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `match_ratios`
@@ -386,7 +394,7 @@ ALTER TABLE `partners`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables
