@@ -153,7 +153,7 @@ Built for and presented at a **Software Development Competition** — secured **
 
 ## 👥 Team
 
-Built by **BSc IT students: Manya & Neav, VESASC, Chembur, Mumbai**
+Built by **BSc IT students: Manya(Developed Backend) & Neav(Developed Frontend), VESASC, Chembur, Mumbai**
 
 ---
 
